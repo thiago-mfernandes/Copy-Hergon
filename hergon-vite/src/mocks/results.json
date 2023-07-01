@@ -1,0 +1,177 @@
+[
+  {
+    "id": 1,
+    "company": "Slc Agrícola",
+    "department": "ADM de Vendas",
+    "area": "Analista",
+    "role": "Analista"
+  },
+  {
+    "id": 2,
+    "company": "Slc Agrícola",
+    "department": "Suprimentos",
+    "area": "Assistente",
+    "role": "Assistente"
+  },
+  {
+    "id": 3,
+    "company": "Slc Agrícola",
+    "department": "Vendas",
+    "area": "Operador",
+    "role": "Operador"
+  },
+  {
+    "id": 4,
+    "company": "Slc Agrícola",
+    "department": "RH e Sust.",
+    "area": "Gerente",
+    "role": "Gerente"
+  },
+  {
+    "id": 5,
+    "company": "Slc Agrícola",
+    "department": "Custos",
+    "area": "Analista",
+    "role": "Analista"
+  },
+  {
+    "id": 6,
+    "company": "Slc Agrícola",
+    "department": "Planejamento Agrícola",
+    "area": "Analista",
+    "role": "Analista"
+  },
+  {
+    "id": 7,
+    "company": "Slc Agrícola",
+    "department": "Contabilidade",
+    "area": "Analista",
+    "role": "Analista"
+  },
+  {
+    "id": 8,
+    "company": "Slc Agrícola",
+    "department": "Financeiro",
+    "area": "Analista",
+    "role": "Analista"
+  },
+  {
+    "id": 9,
+    "company": "Slc Agrícola",
+    "department": "RH e Sust.",
+    "area": "Recepcionista",
+    "role": "Recepcionista"
+  },
+  {
+    "id": 10,
+    "company": "Slc Agrícola",
+    "department": "SSMA",
+    "area": "Analista",
+    "role": "Analista"
+  },
+  {
+    "id": 11,
+    "company": "Slc Agrícola",
+    "department": "SSMA",
+    "area": "Engenheiro de SST",
+    "role": "Engenheiro de SST"
+  },
+  {
+    "id": 12,
+    "company": "Slc Agrícola",
+    "department": "TI",
+    "area": "Analista",
+    "role": "Analista"
+  },
+  {
+    "id": 13,
+    "company": "Slc Agrícola",
+    "department": "RI",
+    "area": "Especialista",
+    "role": "Especialista"
+  },
+  {
+    "id": 14,
+    "company": "Slc Agrícola",
+    "department": "Novos Negócios",
+    "area": "Gerente",
+    "role": "Gerente"
+  },
+  {
+    "id": 15,
+    "company": "Slc Agrícola",
+    "department": "TI",
+    "area": "Desenvolvedor",
+    "role": "Desenvolvedor"
+  },
+  {
+    "id": 16,
+    "company": "Slc Agrícola",
+    "department": "Diretoria",
+    "area": "Diretor TI",
+    "role": "Diretor TI"
+  },
+  {
+    "id": 17,
+    "company": "Slc Agrícola",
+    "department": "Financeiro",
+    "area": "Auxiliar",
+    "role": "Auxiliar"
+  },
+  {
+    "id": 18,
+    "company": "Slc Agrícola",
+    "department": "Financeiro",
+    "area": "Assistente",
+    "role": "Assistente"
+  },
+  {
+    "id": 19,
+    "company": "Slc Agrícola",
+    "department": "Jurídico",
+    "area": "Analista",
+    "role": "Analista"
+  },
+  {
+    "id": 20,
+    "company": "Slc Agrícola",
+    "department": "Jurídico",
+    "area": "Especialista",
+    "role": "Especialista"
+  },
+  {
+    "id": 21,
+    "company": "Slc Agrícola",
+    "department": "Jurídico",
+    "area": "Coordenador",
+    "role": "Coordenador"
+  },
+  {
+    "id": 22,
+    "company": "Slc Agrícola",
+    "department": "Jurídico",
+    "area": "Gerente",
+    "role": "Gerente"
+  },
+  {
+    "id": 23,
+    "company": "Slc Agrícola",
+    "department": "Mecanização",
+    "area": "Gerente",
+    "role": "Gerente"
+  },
+  {
+    "id": 24,
+    "company": "Slc Agrícola",
+    "department": "RH e Sust.",
+    "area": "Aprendiz",
+    "role": "Aprendiz"
+  },
+  {
+    "id": 25,
+    "company": "Slc Agrícola",
+    "department": "RH e Sust.",
+    "area": "Assistente Secr. Executiva",
+    "role": "Assistente Secr. Executiva"
+  }
+]

@@ -1,0 +1,65 @@
+[
+  {
+    "id": 1,
+    "linkTitle": "Dashboard" ,
+    "linkPath": "/dashboard",
+    "icon": "MdDashboard",
+    "subMenu": false
+  },
+  {
+    "id": 2,
+    "linkTitle": "Postos de Trabalho" ,
+    "linkPath": "/workstations",
+    "icon": "FaWrench",
+    "subMenu": false
+  },
+  {
+    "id": 3,
+    "linkTitle": "Inventário de Riscos" ,
+    "linkPath": "/inventories",
+    "icon": "FaListUl",
+    "subMenu": false
+  },
+  {
+    "id": 4,
+    "linkTitle": "Plano de Ação - Tarefas" ,
+    "linkPath": "/tasks",
+    "icon": "FaRegStickyNote",
+    "subMenu": false
+  },
+  {
+    "id": 5,
+    "linkTitle": "Minhas Empresas" ,
+    "linkPath": ["/companies", "/departments", "/areas", "/users"],
+    "icon": "LuClipboardEdit",
+    "subMenu": true
+  },
+  {
+    "id": 6,
+    "linkTitle": "Documentos" ,
+    "linkPath": "/uploads",
+    "icon": "MdCloudDownload",
+    "subMenu": false
+  },
+  {
+    "id": 7,
+    "linkTitle": "Fale Conosco" ,
+    "linkPath": "/contactus",
+    "icon": "BsChat",
+    "subMenu": false
+  },
+  {
+    "id": 8,
+    "linkTitle": "Primeiros Passos" ,
+    "linkPath": "/firststeps",
+    "icon": "MdSchool",
+    "subMenu": false
+  },
+  {
+    "id": 9,
+    "linkTitle": "Configurações" ,
+    "linkPath": "/settings",
+    "icon": "BsGear",
+    "subMenu": false
+  }
+]

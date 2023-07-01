@@ -1,0 +1,664 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "name": "Thiago Fernandes",
+      "email": "thiagof@gmail.com",
+      "avatarUrl": "imagem do usuario",
+      "area": "Desenvolvedor",
+      "password": "123456",
+      "newsletter": false,
+      "openingVideo": false,
+      "myPlan": "Profissional",
+      "roles": [
+        "Super Gestor"
+      ],
+      "refreshToken": "cc6552258-4de4-463d-870e-facf1998291c",
+      "token": "thiagofb65y8p9gning589054nogin905gj9845jng954ng54igkberwukyg5674gvyvdfit34hcbyebr"
+    },
+    {
+      "id": "2",
+      "name": "Murilo Vanucci",
+      "email": "murilov@gmail.com",
+      "avatarUrl": "imagem do usuario",
+      "area": "Gerente",
+      "password": "203040",
+      "newsletter": false,
+      "openingVideo": false,
+      "myPlan": "Profissional",
+      "roles": [
+        "Gestor"
+      ],
+      "refreshToken": "cc6552258-4de4-463d-870e-facf1998291c",
+      "token": ""
+    },
+    {
+      "id": "3",
+      "name": "Thiago Lorenzi",
+      "email": "thiagol@gmail.com",
+      "avatarUrl": "imagem do usuario",
+      "area": "CEO",
+      "password": "987654",
+      "newsletter": false,
+      "openingVideo": false,
+      "myPlan": "Profissional",
+      "roles": [
+        "Super Admin"
+      ],
+      "refreshToken": "cc6552258-4de4-463d-870e-facf1998291c",
+      "token": "thiagolb65y8p9gning589054nogin905gj9845jng954ng54igkberwukyg5674gvyvdfit34hcbyebr"
+    }
+  ],
+
+  "workstations": [
+    {
+      "id": 1,
+      "userId": "1",
+      "company": "Borracharia do Zé",
+      "department": "ADM de Vendas ",
+      "area": "Analista",
+      "role": "Analista"
+    },
+    {
+      "id": 2,
+      "userId": "1",
+      "company": "Dedini",
+      "department": "Suprimentos",
+      "area": "Assistente",
+      "role": "Assistente"
+    },
+    {
+      "id": 3,
+      "userId": "1",
+      "company": "Raizen",
+      "department": "Vendas",
+      "area": "Operador",
+      "role": "Operador"
+    },
+    {
+      "id": 4,
+      "userId": "1",
+      "company": "John Deere",
+      "department": "RH e Sust.",
+      "area": "Gerente",
+      "role": "Gerente"
+    },
+    {
+      "id": 5,
+      "userId": "1",
+      "company": "Health & Care Oficial",
+      "department": "Custos",
+      "area": "Analista",
+      "role": "Analista"
+    },
+    {
+      "id": 6,
+      "userId": "1",
+      "company": "Vivo",
+      "department": "Planejamento Agrícola",
+      "area": "Analista",
+      "role": "Analista"
+    },
+    {
+      "id": 7,
+      "userId": "1",
+      "company": "Ambev",
+      "department": "Contaibilidade",
+      "area": "Analista",
+      "role": "Analista"
+    },
+    {
+      "id": 8,
+      "userId": "1",
+      "company": "Unimed",
+      "department": "Financeiro",
+      "area": "Analista",
+      "role": "Analista"
+    },
+    {
+      "id": 9,
+      "userId": "2",
+      "company": "Slc Agrícola",
+      "department": "RH e Sust.",
+      "area": "Recepcionista",
+      "role": "Recepcionista"
+    },
+    {
+      "id": 10,
+      "userId": "2",
+      "company": "Slc Agrícola",
+      "department": "SSMA",
+      "area": "Analista",
+      "role": "Analista"
+    },
+    {
+      "id": 11,
+      "userId": "2",
+      "company": "Slc Agrícola",
+      "department": "SSMA",
+      "area": "Engenheiro de SST",
+      "role": "Engenheiro de SST"
+    },
+    {
+      "id": 12,
+      "userId": "2",
+      "company": "Slc Agrícola",
+      "department": "TI",
+      "area": "Analista",
+      "role": "Analista"
+    },
+    {
+      "id": 13,
+      "userId": "2",
+      "company": "Slc Agrícola",
+      "department": "RI",
+      "area": "Especialista",
+      "role": "Especialista"
+    },
+    {
+      "id": 14,
+      "userId": "2",
+      "company": "Slc Agrícola",
+      "department": "Novos Negócios",
+      "area": "Gerente",
+      "role": "Gerente"
+    },
+    {
+      "id": 15,
+      "userId": "2",
+      "company": "Slc Agrícola",
+      "department": "TI",
+      "area": "Desenvolvedor",
+      "role": "Desenvolvedor"
+    },
+    {
+      "id": 16,
+      "userId": "2",
+      "company": "Slc Agrícola",
+      "department": "Diretoria",
+      "area": "Diretor TI",
+      "role": "Diretor TI"
+    },
+    {
+      "id": 17,
+      "userId": "3",
+      "company": "Farmacia 01",
+      "department": "Financeiro",
+      "area": "Auxiliar",
+      "role": "Auxiliar"
+    },
+    {
+      "id": 18,
+      "userId": "3",
+      "company": "Farmacia 02",
+      "department": "Financeiro",
+      "area": "Assistente",
+      "role": "Assistente"
+    },
+    {
+      "id": 19,
+      "userId": "3",
+      "company": "Farmacia 03",
+      "department": "Jurídico",
+      "area": "Analista",
+      "role": "Analista"
+    },
+    {
+      "id": 20,
+      "userId": "3",
+      "company": "Farmacia 04",
+      "department": "Jurídico",
+      "area": "Especialista",
+      "role": "Especialista"
+    },
+    {
+      "id": 21,
+      "userId": "3",
+      "company": "Farmacia 05",
+      "department": "Jurídico",
+      "area": "Coordenador",
+      "role": "Coordenador"
+    },
+    {
+      "id": 22,
+      "userId": "3",
+      "company": "Farmacia 06",
+      "department": "Jurídico",
+      "area": "Gerente",
+      "role": "Gerente"
+    },
+    {
+      "id": 23,
+      "userId": "3",
+      "company": "Farmacia 07",
+      "department": "Mecanização",
+      "area": "Gerente",
+      "role": "Gerente"
+    },
+    {
+      "id": 24,
+      "userId": "3",
+      "company": "Farmacia 08",
+      "department": "RH e Sust.",
+      "area": "Aprendiz",
+      "role": "Aprendiz"
+    },
+    {
+      "id": 25,
+      "userId": "3",
+      "company": "Farmacia 09",
+      "department": "RH e Sust.",
+      "area": "Assistente Secr. Executiva",
+      "role": "Assistente Secr. Executiva"
+    }
+  ],
+  
+  "companies": [
+    {
+      "id": 1,
+      "userId": "1",
+      "company": "Be220 Conteúdo Digital"
+    },
+    {
+      "id": 2,
+      "userId": "1",
+      "company": "Health & Care"
+    },
+    {
+      "id": 3,
+      "userId": "1",
+      "company": "SLC Agrícola"
+    },
+    {
+      "id": 4,
+      "userId": "1",
+      "company": "Postal Saúde SPI"
+    },
+    {
+      "id": 5,
+      "userId": "1",
+      "company": "AJURIS"
+    },
+    {
+      "id": 6,
+      "userId": "1",
+      "company": "SAVARAUTO"
+    },
+    {
+      "id": 7,
+      "userId": "1",
+      "company": "Bausch & Lomb"
+    },
+    {
+      "id": 8,
+      "userId": "1",
+      "company": "Health & Care Oficial"
+    },
+    {
+      "id": 9,
+      "userId": "2",
+      "company": "Thiago Lorenzi"
+    },
+    {
+      "id": 10,
+      "userId": "2",
+      "company": "Carbono Comunicacao"
+    },
+    {
+      "id": 11,
+      "userId": "2",
+      "company": "Deyse Santos"
+    },
+    {
+      "id": 12,
+      "userId": "2",
+      "company": "H&C"
+    },
+    {
+      "id": 13,
+      "userId": "2",
+      "company": "Thais Miréa"
+    },
+    {
+      "id": 14,
+      "userId": "2",
+      "company": "Luciana Guarani Silveira"
+    },
+    {
+      "id": 15,
+      "userId": "2",
+      "company": "Rodrigo Inamassu"
+    },
+    {
+      "id": 16,
+      "userId": "2",
+      "company": "Suzane"
+    },
+    {
+      "id": 17,
+      "userId": "3",
+      "company": "Diego"
+    },
+    {
+      "id": 18,
+      "userId": "3",
+      "company": "Juliana"
+    },
+    {
+      "id": 19,
+      "userId": "3",
+      "company": "Samuel Ribeiro"
+    },
+    {
+      "id": 20,
+      "userId": "3",
+      "company": "Claudio Noronha Vaz de Melo"
+    },
+    {
+      "id": 21,
+      "userId": "3",
+      "company": "João Paulo Soares da Fonseca"
+    },
+    {
+      "id": 22,
+      "userId": "3",
+      "company": "Ana Thais"
+    },
+    {
+      "id": 23,
+      "userId": "3",
+      "company": "Claudia Borges Paraizo"
+    },
+    {
+      "id": 24,
+      "userId": "3",
+      "company": "Eduardo Ceccon"
+    },
+    {
+      "id": 25,
+      "userId": "3",
+      "company": "José Augusto Valença Nogueira"
+    }
+  ],
+
+  "departments": [
+    {
+      "id": 1,
+      "company": "Be220 Conteúdo Digital",
+      "departmentName": "PI"
+    },
+    {
+      "id": 2,
+      "company": "Health & Care",
+      "departmentName": "HGP"
+    },
+    {
+      "id": 3,
+      "company": "SLC Agrícola",
+      "departmentName": "Produção_RP III"
+    },
+    {
+      "id": 4,
+      "company": "Postal Saúde SPI",
+      "departmentName": "Controle de Qualidade"
+    },
+    {
+      "id": 5,
+      "company": "AJURIS",
+      "departmentName": "Distribuição"
+    },
+    {
+      "id": 6,
+      "company": "SAVARAUTO",
+      "departmentName": "Auditoria"
+    },
+    {
+      "id": 7,
+      "company": "Bausch & Lomb",
+      "departmentName": "Embalagaem"
+    },
+    {
+      "id": 8,
+      "company": "Health & Care Oficial",
+      "departmentName": "Produção_Extração"
+    },
+    {
+      "id": 9,
+      "company": "Thiago Lorenzi",
+      "departmentName": "Produção_Injeção"
+    },
+    {
+      "id": 10,
+      "company": "Carbono Comunicacao",
+      "departmentName": "Produção_Escritório"
+    },
+    {
+      "id": 11,
+      "company": "Deyse Santos",
+      "departmentName": "Manutenção Elétrica"
+    },
+    {
+      "id": 12,
+      "company": "H&C",
+      "departmentName": "Manutenção Mecânica"
+    },
+    {
+      "id": 13,
+      "company": "Thais Miréa",
+      "departmentName": "Almoxarifado"
+    },
+    {
+      "id": 14,
+      "company": "Luciana Guarani Silveira",
+      "departmentName": "Finanças"
+    },
+    {
+      "id": 15,
+      "company": "Rodrigo Inamassu",
+      "departmentName": "Engenharia"
+    },
+    {
+      "id": 16,
+      "company": "Suzane",
+      "departmentName": "Qualidade"
+    },
+    {
+      "id": 17,
+      "company": "Diego",
+      "departmentName": "Segurança do Trabalho"
+    },
+    {
+      "id": 18,
+      "company": "Juliana",
+      "departmentName": "Importação"
+    },
+    {
+      "id": 19,
+      "company": "Samuel Ribeiro",
+      "departmentName": "Exportação"
+    },
+    {
+      "id": 20,
+      "company": "Claudio Noronha Vaz de Melo",
+      "departmentName": "Fábrica de Tintas"
+    },
+    {
+      "id": 21,
+      "company": "João Paulo Soares da Fonseca",
+      "departmentName": "Compras"
+    },
+    {
+      "id": 22,
+      "company": "Ana Thais",
+      "departmentName": "RH"
+    },
+    {
+      "id": 23,
+      "company": "Claudia Borges Paraizo",
+      "departmentName": "PCP"
+    },
+    {
+      "id": 24,
+      "company": "Eduardo Ceccon",
+      "departmentName": "Processados"
+    },
+    {
+      "id": 25,
+      "company": "José Augusto Valença Nogueira",
+      "departmentName": "Administrativo"
+    }
+  ],
+
+  "areas": [
+    {
+      "id": 1,
+      "area": "Analista",
+      "department": "PI",
+      "numberOfEmployees": 31
+    },
+    {
+      "id": 2,
+      "area": "Assistente",
+      "department": "HGP",
+      "numberOfEmployees": 17
+    },
+    {
+      "id": 3,
+      "area": "Operador",
+      "department": "Produção_RP III",
+      "numberOfEmployees": 14
+    },
+    {
+      "id": 4,
+      "area": "Gerente",
+      "department": "Controle de Qualidade",
+      "numberOfEmployees": 13
+    },
+    {
+      "id": 5,
+      "area": "Analista",
+      "department": "Distribuição",
+      "numberOfEmployees": 16
+    },
+    {
+      "id": 6,
+      "area": "Analista",
+      "department": "Auditoria",
+      "numberOfEmployees": 7
+    },
+    {
+      "id": 7,
+      "area": "Analista",
+      "department": "Embalagaem",
+      "numberOfEmployees": 9
+    },
+    {
+      "id": 8,
+      "area": "Analista",
+      "department": "Produção_Extração",
+      "numberOfEmployees": 8
+    },
+    {
+      "id": 9,
+      "area": "Recepcionista",
+      "department": "Produção_Injeção",
+      "numberOfEmployees": 1
+    },
+    {
+      "id": 10,
+      "area": "Analista",
+      "department": "Produção_Escritório",
+      "numberOfEmployees": 2
+    },
+    {
+      "id": 11,
+      "area": "Engenheiro de SST",
+      "department": "Manutenção Elétrica",
+      "numberOfEmployees": 1
+    },
+    {
+      "id": 12,
+      "area": "Analista",
+      "department": "Manutenção Mecânica",
+      "numberOfEmployees": 6
+    },
+    {
+      "id": 13,
+      "area": "Especialista",
+      "department": "Almoxarifado",
+      "numberOfEmployees": 4
+    },
+    {
+      "id": 14,
+      "area": "Gerente",
+      "department": "Finanças",
+      "numberOfEmployees": 3
+    },
+    {
+      "id": 15,
+      "area": "Desenvolvedor",
+      "department": "Engenharia",
+      "numberOfEmployees": 17
+    },
+    {
+      "id": 16,
+      "area": "Diretor TI",
+      "department": "Qualidade",
+      "numberOfEmployees": 12
+    },
+    {
+      "id": 17,
+      "area": "Auxiliar",
+      "department": "Segurança do Trabalho",
+      "numberOfEmployees": 9
+    },
+    {
+      "id": 18,
+      "area": "Assistente",
+      "department": "Importação",
+      "numberOfEmployees": 1
+    },
+    {
+      "id": 19,
+      "area": "Analista",
+      "department": "Exportação",
+      "numberOfEmployees": 6
+    },
+    {
+      "id": 20,
+      "area": "Especialista",
+      "department": "Fábrica de Tintas",
+      "numberOfEmployees": 5
+    },
+    {
+      "id": 21,
+      "area": "Coordenador",
+      "department": "Compras",
+      "numberOfEmployees": 4
+    },
+    {
+      "id": 22,
+      "area": "Gerente",
+      "department": "RH",
+      "numberOfEmployees": 21
+    },
+    {
+      "id": 23,
+      "area": "Gerente",
+      "department": "PCP",
+      "numberOfEmployees": 13
+    },
+    {
+      "id": 24,
+      "area": "Aprendiz",
+      "department": "Processados",
+      "numberOfEmployees": 11
+    },
+    {
+      "id": 25,
+      "area": "Assistente Secr. Executiva",
+      "department": "Administrativo",
+      "numberOfEmployees": 1
+    }
+  ]
+}
