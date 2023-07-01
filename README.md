@@ -1,2 +1,2 @@
-# Hegon
+# Hergon
 Sistema Hergon
