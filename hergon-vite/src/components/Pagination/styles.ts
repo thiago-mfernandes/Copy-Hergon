@@ -7,13 +7,13 @@ interface ContainerPaginationProps extends HTMLAttributes<HTMLDivElement> {
 
 export const ContainerPagination = styled.div<ContainerPaginationProps>`
   display: flex;  
-  width: ${({ $isWideVersion }) => $isWideVersion ? "100%" : "35%"};
+  width: ${({ $isWideVersion }) => $isWideVersion ? "100%" : "45%"};
 
   .paginationsButtons {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
     
     font-size: 1rem;
@@ -31,6 +31,7 @@ export const ContainerPagination = styled.div<ContainerPaginationProps>`
       padding: 6px;
       width: 40px;
       height: 40px;
+      margin-left: 8px;
     }
   }
   

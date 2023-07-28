@@ -1,3 +1,4 @@
+import { forwardRef } from "react";
 import { 
   FormControl, 
   FormLabel, 
@@ -5,7 +6,6 @@ import {
   InputProps as ChakraInputProps 
 } from "@chakra-ui/react";
 import { RenderIf } from "../../RenderIf";
-import { forwardRef } from "react";
 
 interface InputProps extends ChakraInputProps {
   name?: string;
@@ -13,16 +13,16 @@ interface InputProps extends ChakraInputProps {
   type?: string;
 }
 
-//type InputProps = InputHTMLAttributes<HTMLInputElement>;
+// type InputProps = InputHTMLAttributes<HTMLInputElement>;
 
-//preciso receber as propriedades normais do input pra recer o type do input:
+// preciso receber as propriedades normais do input pra recer o type do input:
 // entao faço a extensao da tipagem
-//pego essas props como ...rest e repasso no componente
+// pego essas props como ...rest e repasso no componente
+
 export const Input = forwardRef<HTMLInputElement,InputProps>(
   ({ type = 'text', name= '', label, ...rest }, ref) => {
     return (
       <FormControl gridColumn="1/3">
-        {/**caso o label exista (!!label verifica se é true) */}
         <RenderIf conditional={!!label}>
           <FormLabel 
             color="gray.700" 
@@ -35,15 +35,15 @@ export const Input = forwardRef<HTMLInputElement,InputProps>(
           </FormLabel>
         </RenderIf>
         <ChakraInput 
+          gridColumn="1/3"
+          backgroundColor="gray.100"
+          variant="filled"
+          size="md"
           ref={ref}
-          {...rest}
           name={name} 
           type={type}
           id={name} 
-          gridColumn="1/3"
-          backgroundColor="gray.200"
-          variant="outline"
-          size="md"
+          {...rest}
         />
       </FormControl>
     );

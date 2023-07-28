@@ -1,18 +1,18 @@
-import { MenuItem as ChakraMenuItem, Icon } from "@chakra-ui/react";
+import { MenuItem as ChakraMenuItem, HTMLChakraProps, Icon } from "@chakra-ui/react";
 import { ReactNode } from "react";
 import { IconType } from "react-icons";
 
-interface MenuItemProps {
+interface MenuItemProps extends HTMLChakraProps<"button"> {
   children: ReactNode;
   textColor: string;
   backgroundColor: string;
   icon: IconType;
-  onClick: () => void;
 }
 
-export function MenuItem({ backgroundColor, children, icon, textColor, onClick } : MenuItemProps ){
+export function MenuItem({ backgroundColor, children, icon, textColor, ...rest } : MenuItemProps ){
   return (
     <ChakraMenuItem
+      {...rest}
       display="flex"
       alignItems="center"
       color={textColor}
@@ -21,7 +21,6 @@ export function MenuItem({ backgroundColor, children, icon, textColor, onClick }
       padding="4"
       margin="0"
       borderRadius="8"
-      onClick={onClick}
     >
       <Icon as={icon} fontSize="16" marginRight="2" />
       {children}

@@ -1,15 +1,20 @@
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useQuery } from "react-query";
-import { css } from "@emotion/react";
 
 import { usePagination } from "@/hooks/usePagination";
-import { api } from "@/services/axios";
-import { Flex, Menu, VStack } from "@chakra-ui/react";
+import { useWideVersion } from "@/hooks/useWideVersion";
+import { WorkstationData, WorkstationServices } from "@/services/http/workstations/WorkstationServices";
 
 import { BsPrinterFill } from "react-icons/bs";
 import { FaPlus } from "react-icons/fa";
 import { MdCloudDownload } from "react-icons/md";
+
+import { 
+  Flex, 
+  Menu, 
+  VStack, 
+} from "@chakra-ui/react";
 
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { Grid } from "@/components/Grid";
@@ -19,63 +24,48 @@ import { MenuButton, MenuList } from "@/components/OverlayMenu";
 import { Pagination } from "@/components/Pagination";
 import { RenderIf } from "@/components/RenderIf";
 import { Sidebar } from "@/components/Sidebar";
-import { Button, MenuItem } from "@/components/Button";
 import { Spinner } from "@/components/Spinner";
+import { PageContainer } from "@/components/PageContainer";
 import * as S from "@/components/Table";
-import { useWideVersion } from "@/hooks/useWideVersion";
-
-
-//preparar a refatoracao de css por este modelo:
-const container = css({
-  display: 'flex',
-  flexDirection: 'row',
-  height: "100vh",
-  padding: "1rem 1rem 0"
-})
-// isso aqui nao funciona nesse css
-// padding: {{ base: "", lg: "1rem 1rem 0"}},
-
-export interface WorkstationData {
-  id: number;
-  company: string;
-  department: string;
-  area: string;
-  role: string;
-}
+import { MenuItem } from "@/components/Button/MenuItem";
+import { Button } from "@/components/Button/Button";
+import { TableActionButton } from "@/components/Button/TableActionButton";
+import { EditButton } from "@/components/Button/EditButton";
+import { DeleteButton } from "@/components/Button/DeleteButton";
+import { WorkstationModal } from "@/components/Modals/WorkstationsModal";
+import { useWorkstationStore } from "@/components/Modals/WorkstationsModal/store/useWorkstationStore";
+import { useWorkstationModal } from "@/components/Modals/WorkstationsModal/hooks/useWorkstationModal";
+import { DeleteModal } from "@/components/Modals/DeleteModal";
+import { useDeleteStore } from "@/components/Modals/DeleteModal/store/useDeleteStore";
 
 export function Workstations() {
 
   const { isWideVersion } = useWideVersion();
-
   const [search, setSearch] = useState("");
 
-  //função para pegar os dados
-  async function getWorkstations() {
-    const { data } = await api.get<WorkstationData[]>("/workstations");
-    return data;
-  }
+  const { workstationToEdit, setWorkstationToEdit, onOpen } = useWorkstationStore();
+
+  const { onDeleteModalOpen } = useDeleteStore();
 
   //query que obtem os dados na chave ['...'] através da fn getWorkstations
   const { data, isLoading } = useQuery({
     queryKey: ['workstationData'],
-    queryFn: getWorkstations
+    queryFn: WorkstationServices.getAll
   })
 
-  const { currentItems, handlePageClick, pageCount, setItemPerPage } = usePagination(data);
-  
+  const { currentItems, handlePageClick, pageCount, setItemPerPage } = usePagination(data);  
 
   //used to trucate texts inside <TableRow />
   const { pathname } = useLocation();
+
+  const { removeWorkstation } = useWorkstationModal();  
 
   return (
     <>
       <RenderIf conditional={isWideVersion}>
         <HamburguerMenu />
-      </RenderIf>
-
-      {/**direction="row" height="100vh" */}
-      <Flex css={container}>
-
+      </RenderIf>      
+      <PageContainer>
         <Sidebar />
         <Grid>
           <RenderIf conditional={isWideVersion}>
@@ -92,7 +82,7 @@ export function Workstations() {
                 <RenderIf conditional={isWideVersion}>
                   <Menu>
                     <MenuButton />
-                    <MenuList>
+                    <MenuList px="2">
                       <VStack spacing="2">
                         <MenuItem 
                           textColor="white" 
@@ -104,7 +94,11 @@ export function Workstations() {
                         <MenuItem 
                           textColor="white" 
                           backgroundColor="green.500"
-                          icon={FaPlus}                        
+                          icon={FaPlus} 
+                          onClick={() => {
+                            setWorkstationToEdit(undefined);
+                            onOpen();
+                          }}                       
                         >
                           Adicionar Função
                         </MenuItem>
@@ -137,7 +131,12 @@ export function Workstations() {
                     <Button 
                       textColor="white" 
                       backgroundColor="green.500" 
-                      icon={FaPlus}>
+                      icon={FaPlus}
+                      onClick={() => {
+                        setWorkstationToEdit(undefined);
+                        onOpen();
+                      }}
+                    >
                         Adicionar Função
                     </Button>
                     <Button 
@@ -162,6 +161,7 @@ export function Workstations() {
               setSearch={setSearch}
               setItemPerPage={setItemPerPage}
             />
+
             <S.TableBox>
               <S.Table>
                 <S.Thead>
@@ -190,15 +190,49 @@ export function Workstations() {
                           return currentItems;
                         }
                       }).map((item: WorkstationData) => (
-                        <S.TableRow 
-                          key={item.id} 
-                          item={item} 
-                          pathname={pathname}
-                        />
+                        <S.Tr key={item.id}>
+                          <S.RenderCell data={item} pathname={pathname} />
+                          <S.TdActions>
+                            <Menu>
+                              <TableActionButton />
+                              <MenuList padding="2">
+                                <VStack spacing="2">
+                                  <EditButton
+                                    onClick={() => {
+                                      setWorkstationToEdit(item);
+                                      onOpen();
+                                    }}
+                                  />
+                                  <DeleteButton 
+                                    onClick={() => {
+                                      setWorkstationToEdit(item);
+                                      onDeleteModalOpen();
+                                    }} 
+                                    width="100%" 
+                                  />          
+                                </VStack>
+                              </MenuList>
+                            </Menu> 
+                          </S.TdActions>
+                        </S.Tr>
                       ))
                   }
                 </S.Tbody>
               </S.Table>
+
+              <WorkstationModal />
+
+              {
+                //Verificar se workstationToEdit.id é valido antes de renderizar o componente
+                workstationToEdit?.id && (
+                  <DeleteModal 
+                    modalTitle="Excluir Posto de Trabalho"
+                    idToDelete={workstationToEdit.id}
+                    removeFunction={removeWorkstation}
+                  />
+                )
+              }
+
             </S.TableBox>
 
             <Pagination
@@ -209,7 +243,7 @@ export function Workstations() {
             />
           </S.TableContainer>
         </Grid>
-      </Flex>
+      </PageContainer>
     </>
   )
 }

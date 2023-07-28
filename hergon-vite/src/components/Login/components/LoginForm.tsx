@@ -7,7 +7,7 @@ import { useLoginForm } from "../hooks/useLoginForm";
 
 export function LoginForm(){
 
-  const { errors, handleForm, handleSubmit, register, showToast} = useLoginForm();
+  const { errors, handleForm, handleSubmit, register, showToast } = useLoginForm();
 
   return (
     <Box 

@@ -2,7 +2,7 @@ import { useAuth } from "@/contexts/Auth";
 import { useShowToast } from "../../../hooks/useShowToast";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FormLoginData } from "../types/FormLoginTypes";
+import { FormLoginTypes } from "../types/FormLoginTypes";
 import { FormLoginSchema } from "../schema/FormLoginSchema";
 
 export function useLoginForm() {
@@ -14,14 +14,13 @@ export function useLoginForm() {
     register, 
     handleSubmit, 
     formState: { errors } 
-  } = useForm<FormLoginData>({
+  } = useForm<FormLoginTypes>({
     resolver: zodResolver(FormLoginSchema),
     mode: 'onSubmit',
     reValidateMode: 'onSubmit'
   });
 
-  async function handleForm(data: FormLoginData) {
-    //console.log(data);
+  async function handleForm(data: FormLoginTypes) {
     await signIn(data);
   }
 

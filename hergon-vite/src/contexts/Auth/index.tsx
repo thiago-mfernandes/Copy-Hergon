@@ -38,12 +38,14 @@ export function AuthProvider({ children } : AuthProviderProps) {
             email,
             avatarUrl,
             area,
+            company,
             newsletter,
             openingVideo,
             myPlan,
             refreshToken,
-            roles,
-            token
+            role,
+            token,
+            isDeleted
           } = response.data[0];
           // setar no estado
           setUser({
@@ -52,12 +54,14 @@ export function AuthProvider({ children } : AuthProviderProps) {
             email,
             avatarUrl,
             area,
+            company,
             newsletter,
             openingVideo,
             myPlan,
             refreshToken,
-            roles,
-            token
+            role,
+            token,
+            isDeleted
           })
         })
     }
@@ -83,12 +87,14 @@ export function AuthProvider({ children } : AuthProviderProps) {
         email,
         avatarUrl,
         area,
+        company,
         newsletter,
         openingVideo,
         myPlan,
         refreshToken,
-        roles,
-        token
+        role,
+        token,
+        isDeleted,
       } = response.data[0];
 
       //setar no estado do user
@@ -98,12 +104,14 @@ export function AuthProvider({ children } : AuthProviderProps) {
         email,
         avatarUrl,
         area,
+        company,
         newsletter,
         openingVideo,
         myPlan,
         refreshToken,
-        roles,
-        token
+        role,
+        token,
+        isDeleted,
       });
 
       //salvar os tokens no cookies 
@@ -126,7 +134,7 @@ export function AuthProvider({ children } : AuthProviderProps) {
       //atualizar no cabecalho de requisicoes o token do usuario logado
       api.defaults.headers['Authorization'] = `Bearer ${token}`
 
-      showToast("É bom ter você de volta!!", "success");
+      showToast("É bom ter você de volta!!", "info");
       navigate("/dashboard");
     } catch (error) {
       console.log(error)

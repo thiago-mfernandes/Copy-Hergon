@@ -5,15 +5,17 @@ export interface UserData {
   id: string; 
   name: string;
   email: string;
-  avatarUrl: string;
+  avatarUrl: string | null;
   area: string;
-  password?: string;
-  newsletter: boolean;
+  company: string;  
+  password?: string | null;
+  newsletter: boolean | null;
   openingVideo: boolean;
-  myPlan: string;
-  refreshToken: string;
-  roles: string[];
-  token: string;
+  myPlan: string | null;
+  refreshToken: string | null;
+  role: string;
+  token: string | null;
+  isDeleted: boolean;
 }
 
 export interface SignInCredentials {

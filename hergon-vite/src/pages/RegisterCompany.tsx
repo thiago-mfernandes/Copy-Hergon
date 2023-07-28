@@ -1,8 +1,10 @@
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { HamburguerMenu } from "@/components/HamburguerMenu";
+import { PageContainer } from "@/components/PageContainer";
+import { RenderIf } from "@/components/RenderIf";
 import { Sidebar } from "@/components/Sidebar";
 import { useWideVersion } from "@/hooks/useWideVersion";
-import { Flex, Text } from "@chakra-ui/react";
+import { Text } from "@chakra-ui/react";
 
 export function RegisterCompany() {
 
@@ -10,14 +12,14 @@ export function RegisterCompany() {
 
   return (
     <>
-      {
-        isWideVersion && <HamburguerMenu />
-      }
-      <Flex direction="row" height="100vh">
+      <RenderIf conditional={isWideVersion}>
+        <HamburguerMenu />
+      </RenderIf>
+      <PageContainer>
         <Sidebar />
         <Breadcrumb />
         <Text>Pagina Formulário de Cadastro de Empresas</Text>
-      </Flex>
+      </PageContainer>
     </>
   )
 }

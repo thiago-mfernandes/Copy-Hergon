@@ -1,62 +1,69 @@
+import { useState } from "react";
+import { useLocation } from "react-router-dom";
+import { useQuery } from "react-query";
+
+import { usePagination } from "@/hooks/usePagination";
+import { useWideVersion } from "@/hooks/useWideVersion";
+import { UserServices } from "@/services/http/users/UserServices";
+import { UserData } from "@/contexts/Auth/interfaces";
+
+import { FaPlus } from "react-icons/fa";
+
+import { 
+  Flex, 
+  Menu,  
+  VStack, 
+} from "@chakra-ui/react";
+
+
 import { Breadcrumb } from "@/components/Breadcrumb";
-import { Button, MenuItem } from "@/components/Button";
 import { Grid } from "@/components/Grid";
 import { HamburguerMenu } from "@/components/HamburguerMenu";
 import { Header } from "@/components/Header";
-import { AddUserModal } from "@/components/Modals/AddUserModal";
 import { MenuButton, MenuList } from "@/components/OverlayMenu";
+import { PageContainer } from "@/components/PageContainer";
 import { Pagination } from "@/components/Pagination";
 import { RenderIf } from "@/components/RenderIf";
 import { Sidebar } from "@/components/Sidebar";
 import { Spinner } from "@/components/Spinner";
+import { useUserModal } from "@/components/Modals/UserModal/hooks/useUserModal";
 import * as S from "@/components/Table";
-import { useAuth } from "@/contexts/Auth";
-import { UserData } from "@/contexts/Auth/interfaces";
-import { usePagination } from "@/hooks/usePagination";
-import { useWideVersion } from "@/hooks/useWideVersion";
-import { api } from "@/services/axios";
-import { Flex, Menu, VStack, useDisclosure } from "@chakra-ui/react";
-import { useState } from "react";
-import { FaPlus } from "react-icons/fa";
-import { useQuery } from "react-query";
-import { useLocation } from "react-router-dom";
-
-
+import { TableActionButton, EditButton, DeleteButton } from "@/components/Button";
+import { DeleteModal } from "@/components/Modals/DeleteModal";
+import { UserModal } from "@/components/Modals/UserModal";
+import { MenuItem } from "@/components/Button/MenuItem";
+import { Button } from "@/components/Button/Button";
+import { useUserStore } from "@/components/Modals/UserModal/store/useUserStore";
+import { useDeleteStore } from "@/components/Modals/DeleteModal/store/useDeleteStore";
 
 export function Users() {
   
   const { isWideVersion } = useWideVersion();
-  const [search, setSearch] = useState("");
-   
+  const [search, setSearch] = useState(""); 
 
-  async function getUsers(){
-    const { data } = await api.get<UserData[]>("/users");
-    //pegando somente os dados que vou usar na tabela
-    const filteredUsers = data.map(({ id, name, email, area, roles }) => 
-      ({ id, name, email, area, roles}));
-    //console.log(filteredUsers);
-    return filteredUsers;
-  }  
+  const { userToEdit, setUserToEdit, onOpen } = useUserStore();
 
+  const { onDeleteModalOpen } = useDeleteStore();
 
   const { data, isLoading } = useQuery({
     queryKey: ['usersData'],
-    queryFn: getUsers
-  });
-
+    queryFn: UserServices.getUsersWithFilteredInfo,
+  });  
+  
   const { currentItems, handlePageClick, pageCount, setItemPerPage } = usePagination(data);
 
   //used to trucate texts inside <TableRow />
   const { pathname } = useLocation();
 
-  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const { removeUser } = useUserModal();
   
   return(
     <>
-      {
-        isWideVersion && <HamburguerMenu />
-      }
-      <Flex direction="row" height="100vh" padding="1rem 1rem 0">
+      <RenderIf conditional={isWideVersion}>
+        <HamburguerMenu />
+      </RenderIf>
+      <PageContainer>
         <Sidebar />
         <Grid>
           <RenderIf conditional={isWideVersion}>
@@ -73,14 +80,18 @@ export function Users() {
                 <RenderIf conditional={isWideVersion}>
                   <Menu>
                     <MenuButton />
-                    <MenuList>
+                    <MenuList px="2">
                       <VStack spacing="2">
                         <MenuItem
-                          onClick={onOpen}
                           textColor="white" 
                           backgroundColor="green.500" 
-                          icon={FaPlus}>
-                            Adicionar Usuário
+                          icon={FaPlus}
+                          onClick={() => [
+                            setUserToEdit(undefined),
+                            onOpen(),
+                          ]} 
+                        >
+                          Adicionar Usuário
                         </MenuItem>
                       </VStack>
                     </MenuList>
@@ -92,7 +103,10 @@ export function Users() {
                       textColor="white" 
                       backgroundColor="green.500"
                       icon={FaPlus} 
-                      onClick={onOpen}                   
+                      onClick={() => [
+                        setUserToEdit(undefined),
+                        onOpen(),
+                      ]}                   
                     >
                       Adicionar Usuário
                     </Button>
@@ -100,12 +114,6 @@ export function Users() {
                 </RenderIf>
               </S.TableActions>
             </S.TableHeader>
-
-            <AddUserModal 
-              isOpen={isOpen} 
-              onClose={onClose} 
-              //companiesById={companiesById}
-            />
 
             <S.TableControllers 
               search={search} 
@@ -122,6 +130,7 @@ export function Users() {
                     <S.Th>Email</S.Th>
                     <S.Th>Área</S.Th>
                     <S.Th>Permissão</S.Th>
+                    <S.Th>Empresa</S.Th>
                     <S.ThActions />
                   </S.Tr>
                 </S.Thead>
@@ -131,6 +140,7 @@ export function Users() {
                   isLoading //if
                   ? <Spinner/> //case true
                   : currentItems.length === 0 //if
+
                     ? //case true
                     <S.EmptyTable />
                     
@@ -142,15 +152,49 @@ export function Users() {
                         return currentItems;
                       }
                     }).map((item: UserData) => (
-                      <S.TableRow 
-                        key={item.id} 
-                        item={item} 
-                        pathname={pathname}
-                      />
+                      <S.Tr key={item.id}>
+                        <S.RenderCell data={item} pathname={pathname} />
+                        <S.TdActions>
+                          <Menu>
+                            <TableActionButton />
+                            <MenuList padding="2">
+                              <VStack spacing="2">
+                                <EditButton
+                                  onClick={() => [
+                                    setUserToEdit(item),
+                                    onOpen()
+                                  ]}
+                                />
+                                <DeleteButton 
+                                  onClick={() => [
+                                    setUserToEdit(item),
+                                    onDeleteModalOpen()
+                                  ]} 
+                                  width="100%" 
+                                />          
+                              </VStack>
+                            </MenuList>
+                          </Menu> 
+                        </S.TdActions>
+                      </S.Tr>
                     ))
                   }
                 </S.Tbody>
               </S.Table>
+
+              <UserModal />
+
+              {
+              //Verificar se dataEdit.id é valido antes de renderizar o componente
+              userToEdit?.id && (
+                  <DeleteModal 
+                    modalTitle="Excluir Usuário"
+                    idToDelete={userToEdit.id}
+                    removeFunction={removeUser}
+                  />
+                )
+              }
+
             </S.TableBox>
 
             <Pagination
@@ -162,7 +206,7 @@ export function Users() {
 
           </S.TableContainer>
         </Grid>
-      </Flex>
+      </PageContainer>
     </>
   )
 }

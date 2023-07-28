@@ -27,14 +27,14 @@ export function Pagination({ currentItems, data, handlePageClick, pageCount} : P
       <TotalViews currentItems={currentItems} data={data} />
       <S.ContainerPagination $isWideVersion={isWideVersion}>
         <ReactPaginate
-          breakLabel="..."
-          nextLabel={<FaCaretRight />}
-          onPageChange={handlePageClick}
-          pageRangeDisplayed={6}
-          pageCount={pageCount}
-          previousLabel={<FaCaretLeft />}
-          renderOnZeroPageCount={null}
-          containerClassName={"paginationsButtons"}
+          breakLabel="..." //rótulo que aparece das paginas ocultas
+          nextLabel={<FaCaretRight />} //botao avançar
+          onPageChange={handlePageClick} //metodo chamado qdo a pag é alterada
+          pageRangeDisplayed={2} //qts pag aparece no contador + a atul
+          pageCount={pageCount} //numero total de paginas
+          previousLabel={<FaCaretLeft />} //botao voltar
+          renderOnZeroPageCount={null} //o que renderiza quando pageCount for zero
+          containerClassName={"paginationsButtons"} 
           previousClassName={"previousButton"}
           nextClassName={"nextButton"}
           disabledClassName={"paginationDisabled"}

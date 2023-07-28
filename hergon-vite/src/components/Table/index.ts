@@ -4,7 +4,7 @@ import { Thead } from "../Table/components/Thead";
 import { Tbody } from "../Table/components/Tbody";
 import { Tr } from "../Table/components/Tr";
 import { Td } from "../Table/components/Td";
-import { TdActions } from "../Table/components/TdAction";
+import { TdActions } from "./components/TdActions";
 import { TotalViews } from "../Table/components/TotalViews";
 import { TableRow } from "../Table/components/TableRow";
 import { TableActions } from "../Table/components/TableActions";
@@ -15,6 +15,7 @@ import { ThActions } from "./components/ThActions";
 import { ThId } from "./components/ThId";
 import { Th } from "./components/Th";
 import { EmptyTable } from "./components/EmptyTable";
+import { RenderCell } from "./components/RenderCell";
 
 export { 
   Table, 
@@ -34,4 +35,5 @@ export {
   ThId, 
   Th,
   EmptyTable,
+  RenderCell,
  }

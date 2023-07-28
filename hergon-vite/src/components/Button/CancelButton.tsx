@@ -1,16 +1,12 @@
-import { Button } from "@chakra-ui/react";
+import { Button, HTMLChakraProps } from "@chakra-ui/react";
 
-interface CancelButtonProps {
-  onClose: () => void;
-}
-
-export function CancelButton({ onClose }: CancelButtonProps){
+export function CancelButton({ ...rest }: HTMLChakraProps<"button">){
   return (
     <Button 
+      {...rest}
       variant="outline" 
       colorScheme='red' 
-      marginRight={3} 
-      onClick={onClose}
+      marginRight={3}
     >
       Cancelar
     </Button>

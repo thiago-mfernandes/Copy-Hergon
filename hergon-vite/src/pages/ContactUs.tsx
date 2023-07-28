@@ -1,7 +1,9 @@
 import { HamburguerMenu } from "@/components/HamburguerMenu";
+import { PageContainer } from "@/components/PageContainer";
+import { RenderIf } from "@/components/RenderIf";
 import { Sidebar } from "@/components/Sidebar";
 import { useWideVersion } from "@/hooks/useWideVersion";
-import { Flex, Text } from "@chakra-ui/react";
+import { Text } from "@chakra-ui/react";
 
 export function ContactUs(){
   
@@ -9,13 +11,13 @@ export function ContactUs(){
   
   return(
     <>
-      {
-        isWideVersion && <HamburguerMenu />
-      }
-      <Flex direction="row" height="100vh">
+      <RenderIf conditional={isWideVersion}>
+        <HamburguerMenu />
+      </RenderIf>
+      <PageContainer>
         <Sidebar />
         <Text>Pagina fale conosco</Text>
-      </Flex>
+      </PageContainer>
     </>
   )
 }

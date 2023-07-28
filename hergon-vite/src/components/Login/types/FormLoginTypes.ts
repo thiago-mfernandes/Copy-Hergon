@@ -1,4 +1,4 @@
 import { z } from "zod";
 import { FormLoginSchema } from "../schema/FormLoginSchema";
 
-export type FormLoginData = z.infer<typeof FormLoginSchema>;
+export type FormLoginTypes = z.infer<typeof FormLoginSchema>;

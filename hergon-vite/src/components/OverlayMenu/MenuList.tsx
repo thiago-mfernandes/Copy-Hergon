@@ -1,12 +1,18 @@
-import { MenuList as ChakraMenuList } from "@chakra-ui/react";
-import { ChildrenProps } from "@/components/Table/interfaces";
+import { MenuList as ChakraMenuList, HTMLChakraProps } from "@chakra-ui/react";
+import { ReactNode } from "react";
 
-export function MenuList({ children }: ChildrenProps) {
+interface MenuList extends HTMLChakraProps<"div"> {
+  children: ReactNode;
+}
+
+export function MenuList({ children, ...rest }: MenuList) {
   return (
     <ChakraMenuList
       borderRadius="8"
       boxShadow="2xl"
-      padding="4"
-    >{children}</ChakraMenuList>
+      {...rest}
+    >
+      {children}
+    </ChakraMenuList>
   );
 }

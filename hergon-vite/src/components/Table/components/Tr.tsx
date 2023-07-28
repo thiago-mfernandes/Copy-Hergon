@@ -1,12 +1,20 @@
-import { ChildrenProps } from "../interfaces";
-import { Tr as TrChakra } from "@chakra-ui/react";
+import { ReactNode } from "react";
+import { Tr as TrChakra, HTMLChakraProps } from "@chakra-ui/react";
 
-export function Tr({ children }: ChildrenProps) {
+interface TrProps extends HTMLChakraProps<"tr"> {
+  children: ReactNode;
+}
+
+export function Tr({ children, ...rest }: TrProps) {
   return (
     <TrChakra
-      display={{ base: "block", lg: "flex"}}
-      alignItems={{lg: "center"}}
-      width="100%"
-    >{children}</TrChakra>
+    display={{ base: "block", lg: "flex"}}
+    alignItems={{lg: "center"}}
+    max-width="100%"
+    
+    {...rest}
+    >
+      {children}
+    </TrChakra>
   )
 }

@@ -22,7 +22,7 @@ export function usePagination(data: any) {
   const currentItems = data?.slice(itemOffset, endOffset);
   //console.log(currentItems);
 
-  const pageCount = Math.ceil(data?.length / itemsPerPage);
+  const pageCount = Math.ceil((data?.length || 0) / itemsPerPage);
 
   // Invoke when user click to request another page.
   const handlePageClick = (event: { selected: number; }) => {

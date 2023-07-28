@@ -46,7 +46,7 @@ export function UserProfile() {
             {user.email}
           </Text> 
         </Flex>
-        <Avatar src="" size="md"/>
+        <Avatar src="https://avatars.githubusercontent.com/u/91342038?v=4" size="md"/>
       </Flex>
     </Flex>
   )

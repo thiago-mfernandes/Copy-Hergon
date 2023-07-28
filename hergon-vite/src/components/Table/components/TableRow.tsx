@@ -1,12 +1,16 @@
-import { Td, TdActions, Tr } from "../";
+import { Menu, VStack } from "@chakra-ui/react";
+import * as S from "../"
+import { DeleteButton, EditButton, SeeMoreButton, TableActionButton } from "@/components/Button";
+import { MenuList } from "@/components/OverlayMenu";
 
 export function TableRow({ item, pathname }: any) {
+  
   function renderCell(data: any) {
 
     return (
-      <Td data={data} pathname={pathname}>
+      <S.Td data={data} pathname={pathname}>
         {data}
-      </Td>
+      </S.Td>
     );
   }
 
@@ -16,9 +20,27 @@ export function TableRow({ item, pathname }: any) {
   }
 
   return (
-    <Tr key={item.id}>
+    <S.Tr key={item.id}>
       {cells.map((item) => renderCell(item))}
-      <TdActions />
-    </Tr>
+      <S.TdActions>
+        <Menu>
+          <TableActionButton />
+          <MenuList padding="2">
+
+            <VStack spacing="2">
+              <SeeMoreButton />
+              <EditButton
+                // onClick={() => [
+                //   setDataEdit(item),
+                //   onOpen()
+                // ]}
+              />
+              <DeleteButton />          
+            </VStack>
+
+          </MenuList>
+        </Menu> 
+      </S.TdActions>
+    </S.Tr>
   )
 }

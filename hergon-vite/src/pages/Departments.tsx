@@ -3,10 +3,16 @@ import { useLocation } from "react-router-dom";
 import { useQuery } from "react-query";
 
 import { usePagination } from "@/hooks/usePagination";
-import { api } from "@/services/axios";
+import { useWideVersion } from "@/hooks/useWideVersion";
+import { DepartmentServices, DepartmentsData } from "@/services/http/departments/DepartmentServices";
 
-import { Flex, Menu, VStack } from "@chakra-ui/react";
 import { FaPlus } from "react-icons/fa";
+
+import {
+  Flex,
+  Menu,
+  VStack,
+} from "@chakra-ui/react";
 
 import { HamburguerMenu } from "@/components/HamburguerMenu";
 import { Header } from "@/components/Header";
@@ -14,55 +20,55 @@ import { Pagination } from "@/components/Pagination";
 import { RenderIf } from "@/components/RenderIf";
 import { Sidebar } from "@/components/Sidebar";
 import { Spinner } from "@/components/Spinner";
-import { Button, MenuItem } from "@/components/Button";
 import { Grid } from "@/components/Grid";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { MenuButton, MenuList } from "@/components/OverlayMenu";
+import { PageContainer } from "@/components/PageContainer";
 import * as S from "@/components/Table";
-import { useWideVersion } from "@/hooks/useWideVersion";
-
-interface DepartmentsData {
-  id: number;
-  company: string;
-  departmentName: string;
-}
+import { DepartmentModal } from "@/components/Modals/DepartmentsModal";
+import { useDepartmentModal } from "@/components/Modals/DepartmentsModal/hooks/useDepartmentModal";
+import { MenuItem } from "@/components/Button/MenuItem";
+import { Button } from "@/components/Button/Button";
+import { TableActionButton } from "@/components/Button/TableActionButton";
+import { EditButton } from "@/components/Button/EditButton";
+import { DeleteButton } from "@/components/Button";
+import { DeleteModal } from "@/components/Modals/DeleteModal";
+import { useDepartmentStore } from "@/components/Modals/DepartmentsModal/store/useDepartmentStore";
+import { useDeleteStore } from "@/components/Modals/DeleteModal/store/useDeleteStore";
 
 export function Departments() {
-  
-  const { isWideVersion } = useWideVersion();
 
+  const { isWideVersion } = useWideVersion();
   const [search, setSearch] = useState("");
 
-  async function getDepartments(){
-    const { data } = await api.get<DepartmentsData[]>("/departments");
-    return data;
-  }
+  const { departmentToEdit, onOpen, setDepartmentToEdit } = useDepartmentStore();
+  const { onDeleteModalOpen } = useDeleteStore();
 
   const { data, isLoading } = useQuery({
     queryKey: ['departmentsData'],
-    queryFn: getDepartments
+    queryFn: DepartmentServices.getAll
   });
 
   const { currentItems, handlePageClick, pageCount, setItemPerPage } = usePagination(data);
 
   //used to trucate texts inside <TableRow />
   const { pathname } = useLocation();
-  
-  return(
+
+  const { removeDepartment } = useDepartmentModal();
+
+  return (
     <>
       <RenderIf conditional={isWideVersion}>
         <HamburguerMenu />
       </RenderIf>
-      
-      <Flex direction="row" height="100vh" padding="1rem 1rem 0">
+
+      <PageContainer>
         <Sidebar />
-        {/**daqui para baixo */}
-        {/*<Text>Página de Setores</Text>*/}
         <Grid>
           <RenderIf conditional={isWideVersion}>
             <Breadcrumb />
           </RenderIf>
-          
+
           <RenderIf conditional={!isWideVersion}>
             <Header />
           </RenderIf>
@@ -73,13 +79,18 @@ export function Departments() {
                 <RenderIf conditional={isWideVersion}>
                   <Menu>
                     <MenuButton />
-                    <MenuList>
+                    <MenuList px="2">
                       <VStack spacing="2">
                         <MenuItem
-                          textColor="white" 
-                          backgroundColor="green.500" 
-                          icon={FaPlus}>
-                            Adicionar Setor
+                          textColor="white"
+                          backgroundColor="green.500"
+                          icon={FaPlus}
+                          onClick={() => [
+                            setDepartmentToEdit(undefined),
+                            onOpen(),
+                          ]}
+                        >
+                          Adicionar Setor
                         </MenuItem>
                       </VStack>
                     </MenuList>
@@ -88,9 +99,13 @@ export function Departments() {
                 <RenderIf conditional={!isWideVersion}>
                   <Flex>
                     <Button
-                      textColor="white" 
+                      textColor="white"
                       backgroundColor="green.500"
-                      icon={FaPlus}                    
+                      icon={FaPlus}
+                      onClick={() => [
+                        setDepartmentToEdit(undefined),
+                        onOpen(),
+                      ]}
                     >
                       Adicionar Setor
                     </Button>
@@ -99,10 +114,10 @@ export function Departments() {
               </S.TableActions>
             </S.TableHeader>
 
-            <S.TableControllers 
-              search={search} 
-              setSearch={setSearch} 
-              setItemPerPage={setItemPerPage} 
+            <S.TableControllers
+              search={search}
+              setSearch={setSearch}
+              setItemPerPage={setItemPerPage}
             />
 
             <S.TableBox>
@@ -112,35 +127,70 @@ export function Departments() {
                     <S.ThId />
                     <S.Th>Empresas</S.Th>
                     <S.Th>Setor</S.Th>
+                    <S.Th>Descrição</S.Th>
                     <S.ThActions />
                   </S.Tr>
                 </S.Thead>
 
                 <S.Tbody>
-                {
-                  isLoading //if
-                  ? <Spinner/> //case true
-                  : currentItems.length === 0 //if
-                    ? //case true
-                    <S.EmptyTable />
-                    
-                    : //case false
-                    currentItems?.filter((item: DepartmentsData) => {
-                      if (search === "") {
-                        return currentItems;
-                      } else if (item.departmentName.includes(search)) {
-                        return currentItems;
-                      }
-                    }).map((item: DepartmentsData) => (
-                      <S.TableRow 
-                        key={item.id} 
-                        item={item} 
-                        pathname={pathname}
-                      />
-                    ))
+                  {
+                    isLoading //if
+                      ? <Spinner /> //case true
+                      : currentItems.length === 0 //if
+                        ? //case true
+                        <S.EmptyTable />
+
+                        : //case false
+                        currentItems?.filter((item: DepartmentsData) => {
+                          if (search === "") {
+                            return currentItems;
+                          } else if (item.departmentName?.includes(search)) {
+                            return currentItems;
+                          }
+                        }).map((item: DepartmentsData) => (
+                          <S.Tr key={item.id}>
+                            <S.RenderCell data={item} pathname={pathname} />
+                            <S.TdActions>
+                              <Menu>
+                                <TableActionButton />
+                                <MenuList padding="2">
+                                  <VStack spacing="2">
+                                    <EditButton
+                                      onClick={() => [
+                                        setDepartmentToEdit(item),
+                                        onOpen()
+                                      ]}
+                                    />
+                                    <DeleteButton
+                                      onClick={() => [
+                                        setDepartmentToEdit(item),
+                                        onDeleteModalOpen()
+                                      ]}
+                                      width="100%"
+                                    />
+                                  </VStack>
+                                </MenuList>
+                              </Menu>
+                            </S.TdActions>
+                          </S.Tr>
+                        ))
                   }
                 </S.Tbody>
               </S.Table>
+
+              <DepartmentModal />
+
+              {
+                //Verificar se dataEdit.id é valido antes de renderizar o componente
+                departmentToEdit?.id && (
+                  <DeleteModal
+                    modalTitle="Excluir Setor"
+                    idToDelete={departmentToEdit.id}
+                    removeFunction={removeDepartment}
+                  />
+                )
+              }
+
             </S.TableBox>
 
             <Pagination
@@ -151,7 +201,7 @@ export function Departments() {
             />
           </S.TableContainer>
         </Grid>
-      </Flex>
+      </PageContainer>
     </>
   )
 }
