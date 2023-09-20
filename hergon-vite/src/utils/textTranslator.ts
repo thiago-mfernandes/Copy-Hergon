@@ -27,7 +27,7 @@ export function textTranslator(data: string) {
     case "areas":
       return "Áreas";
     case "role":
-      return "Função";
+      return "Permissão";
     case "roleValue":
       return "Permissão";
     case "numberOfEmployees":
@@ -42,6 +42,10 @@ export function textTranslator(data: string) {
       return "Permissão";
     case "description":
       return "Descrição";
+    case "uploads":
+      return "Uploads";
+    case "enchiridions":
+      return "Prontuários";
     default:
       return "Not found";
   }

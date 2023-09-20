@@ -6,7 +6,7 @@ import { useLocation } from "react-router-dom";
 
 interface TableControllersProps {
   search: string;
-  setSearch: Dispatch<SetStateAction<string>>;
+  setSearch: (data: string) => void;
   setItemPerPage: Dispatch<SetStateAction<number>>;
 }
 

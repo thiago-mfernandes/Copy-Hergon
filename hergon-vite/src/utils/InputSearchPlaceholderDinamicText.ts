@@ -11,6 +11,8 @@ export function InputSearchPlaceholderDinamicText(pathname: string) {
       return `${input} Área`;
     case "/users":
       return `${input} Usuário`;
+    case "/enchiridions":
+      return `${input} Função`;
     default:
       return "NotFound";
   }

@@ -1,8 +1,8 @@
-import { MenuItem as ChakraMenuItem, HTMLChakraProps, Icon } from "@chakra-ui/react";
+import { ButtonOptions, MenuItem as ChakraMenuItem, HTMLChakraProps, Icon } from "@chakra-ui/react";
 import { ReactNode } from "react";
 import { IconType } from "react-icons";
 
-interface MenuItemProps extends HTMLChakraProps<"button"> {
+type MenuItemProps = HTMLChakraProps<"button"> & ButtonOptions & {
   children: ReactNode;
   textColor: string;
   backgroundColor: string;

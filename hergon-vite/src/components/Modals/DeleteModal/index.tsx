@@ -35,7 +35,10 @@ export function DeleteModal({ modalTitle, idToDelete, removeFunction }: DeleteMo
 
         <ModalFooter>
           <CancelButton onClick={onDeleteModalClose} />
-          <DeleteButton onClick={() => removeFunction(idToDelete)} />
+          <DeleteButton onClick={() => 
+              idToDelete !== undefined && removeFunction(idToDelete)
+            } 
+          />
         </ModalFooter>
       </ModalContent>
     </Modal>

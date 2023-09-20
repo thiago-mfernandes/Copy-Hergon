@@ -18,7 +18,7 @@ export function useForgotPasswordForm() {
     reValidateMode: 'onSubmit'
   });
 
-  async function handleForm(data: ForgotPasswordTypes) {
+  async function handleForm(_data: ForgotPasswordTypes) {
     showToast("Resetamos sua senha e enviamos um email com as instruções de acesso. Verifique seu email ou caixa de span.", "info", 8000);
   }
   

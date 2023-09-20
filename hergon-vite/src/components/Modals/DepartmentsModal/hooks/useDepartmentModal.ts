@@ -11,10 +11,14 @@ import { DepartmentModalFormTypes } from "../types/DepartmentModalFormTypes";
 import { departmentFormSchema } from "../schema/departmentFormSchema";
 import { useDepartmentStore } from "../store/useDepartmentStore";
 import { useEffect } from "react";
+import { useCheckboxStore } from "@/components/Checkbox/store/useCheckboxStore";
+import { useDeleteManyStore } from "../../DeleteManyModal/store/useDeleteManyStore";
 
 export function useDepartmentModal(){
 
   const { onClose, departmentToEdit } = useDepartmentStore();
+  const { setSelectedCheckbox } = useCheckboxStore();
+  const { onDeleteManyModalClose } = useDeleteManyStore();
 
   const { 
     register, 
@@ -42,19 +46,19 @@ export function useDepartmentModal(){
   
   async function addDepartment(data: DepartmentModalFormTypes){
 
-    const macthCompany = companiesData?.find((element) => element.companyName.label === data.companyName?.label);
+    const macthCompany = companiesData?.find((element) => element.companyName === data.companyName?.label);
     
     const newDepartment: DepartmentsData = {
       id: uuidv4(),
       companyId: macthCompany?.id,
-      companyName: macthCompany?.companyName.value,
+      companyName: macthCompany?.companyName,
       departmentName: data.departmentName,
       description: data.description ? data.description : "-",
     }
     //envio a requisicao
     const response = await DepartmentServices.add(newDepartment);
 
-    if(response.status === 201) {
+    if(response?.status === 201) {
       //em caso de sucesso
       showToast("Setor criado com sucesso.", "info");
       //revalidar os dados da tabela de setores
@@ -85,7 +89,7 @@ export function useDepartmentModal(){
       //envio a requisicao
       const response = await DepartmentServices.edit(editedDepartment);
   
-      if(response.status === 200) {
+      if(response?.status === 200) {
         //em caso de sucesso
         showToast("Setor editado com sucesso.", "info");
         //revalidar os dados da tabela de setores
@@ -109,7 +113,7 @@ export function useDepartmentModal(){
     //envio a requisição
     const response = await DepartmentServices.remove(id);
 
-    if(response.status === 200) {
+    if(response?.status === 200) {
       //em caso de sucesso
       showToast("Setor excluído com sucesso.", "info");
       //revalidar os dados da tabela de Departamentos
@@ -121,6 +125,19 @@ export function useDepartmentModal(){
     } else {
       showToast("Não foi possível excluir o setor. Tente Novamente.", "error");
     } 
+  }
+
+  async function removeAllDepartment(data: string[]) {
+    const response = await DepartmentServices.removeAll(data);
+
+    if(response == 200) {
+      showToast("Setores removidos com sucesso", "info");
+      queryClient.invalidateQueries(["departmentsData"]);
+      setSelectedCheckbox([]);
+      onDeleteManyModalClose();
+    } else {
+      showToast("Não foi possível excluir os setores. Tente novamente.", "error");
+    }
   }
 
   async function onSubmitDepartmentModal(data: DepartmentModalFormTypes) {
@@ -164,6 +181,7 @@ export function useDepartmentModal(){
     addDepartment,
     editDepartment,
     removeDepartment,
+    removeAllDepartment,
     onSubmitDepartmentModal,
     onClose,
     companiesGroupOptions,

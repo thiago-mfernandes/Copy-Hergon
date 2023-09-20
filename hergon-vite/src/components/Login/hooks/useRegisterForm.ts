@@ -8,7 +8,7 @@ export function useRegisterForm() {
   
   const { showToast } = useShowToast(); 
 
-  async function handleForm(data: any) {
+  async function handleForm() {
     showToast("Solicitação de acesso enviada com sucesso. Verifique sua caixa de email ou spam.", "info", 8000);
   }
   

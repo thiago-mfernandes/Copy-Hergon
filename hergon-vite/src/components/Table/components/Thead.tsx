@@ -1,11 +1,14 @@
-import { Thead as ChakraThead } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import { ChildrenProps } from "../interfaces";
 
 export function Thead({ children }: ChildrenProps) {
   return (
-    <ChakraThead
-      display={{ base: "none", lg: "table-header-group"}}
+    <Flex
+      display={{ base: "none", lg: "flex"}}
       width="100%"
-    >{children}</ChakraThead>
+      paddingBottom="3"
+    >
+      {children}
+    </Flex>
   );
 }

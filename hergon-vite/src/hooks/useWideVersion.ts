@@ -7,8 +7,8 @@ export interface isWideVersionProps {
 export function useWideVersion() {
 
   const isWideVersion = useBreakpointValue({
-    base: true,
-    lg: false,
+    base: false,
+    lg: true,
   });
   
   return { isWideVersion };

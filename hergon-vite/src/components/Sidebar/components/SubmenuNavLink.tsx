@@ -16,16 +16,14 @@ export function SubmenuNavLink({ icon, linkPath, linkTitle }: SubmenuNavLinkProp
   return (
     <Accordion allowToggle width="100%">
       <AccordionItem borderStyle="none">
-        <h2 style={{ borderColor: "transparent", borderStyle: "none", borderWidth: "0" }}>
           <AccordionButton padding="12px 0">
-            <Flex flex='1' textAlign='left' color="gray.600">
-              <Icon as={iconSelector(icon)} fontSize="24" color="gray.600" marginRight="2" />
+            <Flex flex='1' textAlign='left' color="gray.600" alignItems="center">
+              <Icon as={iconSelector(icon)} fontSize="18" color="gray.600 important!" marginRight="2" />
               {linkTitle}
             </Flex>
-            <AccordionIcon />
+            <AccordionIcon  color="gray.600" /> {/**chevron-down */}
           </AccordionButton>
-        </h2>
-        <AccordionPanel pb={4}>
+        <AccordionPanel>
           {
             linkPath.map((link) => (
               <Link

@@ -13,19 +13,19 @@ interface PaginationProps {
   pageCount: number;
 }
 
-export function Pagination({ currentItems, data, handlePageClick, pageCount} : PaginationProps) {
+export function Pagination({ currentItems, data, handlePageClick, pageCount } : PaginationProps) {
 
   const { isWideVersion } = useWideVersion();
 
   return (
     <Flex
-    flexDirection={{base: "column", lg: "row"}}
+      flexDirection={{base: "column", lg: "row"}}
       alignItems={{ base: "flex-start", lg: "center"}}
       justifyContent="space-between"
       padding="0 1.5rem"
     >
       <TotalViews currentItems={currentItems} data={data} />
-      <S.ContainerPagination $isWideVersion={isWideVersion}>
+      <S.ContainerPagination $isWideVersion={!isWideVersion}>
         <ReactPaginate
           breakLabel="..." //rótulo que aparece das paginas ocultas
           nextLabel={<FaCaretRight />} //botao avançar

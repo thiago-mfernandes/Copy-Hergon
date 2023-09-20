@@ -6,6 +6,9 @@ import {
 import { FormLabel, FormControl } from "@chakra-ui/react";
 import { Select, Props as SelectProps, GroupBase } from "chakra-react-select";
 import { RenderIf } from "@/components/RenderIf";
+import { OnChangeValue, ActionMeta } from "react-select";
+import { ChangeEvent } from "react";
+
 
 interface ControlledSelectProps<
   FormValues extends FieldValues = FieldValues,
@@ -16,6 +19,8 @@ interface ControlledSelectProps<
   extends Omit<SelectProps<Option, IsMulti, Group>, "name" | "defaultValue">,
     UseControllerProps<FormValues> {
   label?: string;
+  onChange?: (selectedOption: OnChangeValue<Option, IsMulti>, action: ActionMeta<Option>) => void;
+  isMulti?: IsMulti;
 }
 
 /**
@@ -35,11 +40,12 @@ export function  ControlledSelect<
   control,
   rules,
   shouldUnregister,
+  onChange,
+  isMulti,
   ...selectProps
 }: ControlledSelectProps<FormValues, Option, IsMulti, Group>) {
   const {
     field,
-    fieldState: { error },
   } = useController<FormValues>({
     name,
     control,
@@ -63,23 +69,19 @@ export function  ControlledSelect<
       <Select<Option, IsMulti, Group>
         variant="filled"
         options={options}
+        isMulti={isMulti}
         {...selectProps}
         {...field}
         onChange={(selectedOption) => {
           // Call the field.onChange function provided by useController
-          field.onChange(selectedOption);
+          //selectedOption as unknown as ChangeEvent<HTMLSelectElement | Element>
+          field.onChange(selectedOption as unknown as ChangeEvent<HTMLSelectElement | Element>);
           // If the ControlledSelect component has its own onChange prop, call it as well
-          if (selectProps.onChange) {
-            selectProps.onChange(selectedOption);
+          if (onChange) {
+            onChange(selectedOption, {} as ActionMeta<Option>);
           }
         }}
       />
     </FormControl>
   );
 }
-
-
-
-
-
-

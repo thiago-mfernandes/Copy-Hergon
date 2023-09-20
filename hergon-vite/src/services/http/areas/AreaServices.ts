@@ -10,23 +10,50 @@ export interface AreaData {
 }
 
 async function getAll() {
-  const { data } = await api.get("/areas");
-  return data;
+  try {
+    const { data } = await api.get("/areas");
+    return data;
+  } catch (error) {
+    console.log("Erro ao obter todos os registros das areas: ", error);
+  }
 }
 
 async function add(newArea: AreaData) {
-  const response = await api.post("/areas", newArea);
-  return response;
+  try {
+    const response = await api.post("/areas", newArea);
+    return response;
+  } catch (error) {
+    console.log("Erro ao adicionar registros das areas: ", error);
+  }
 }
 
 async function edit(editedArea: Partial<AreaData>) {
-  const response = await api.put(`/areas/${editedArea.id}`, editedArea);
-  return response;
+  try {
+    const response = await api.put(`/areas/${editedArea.id}`, editedArea);
+    return response;
+  } catch (error) {
+    console.log("Erro ao editar registros das areas: ", error);
+  }
 }
 
 async function remove(id: string) {
-  const response = await api.delete(`/areas/${id}`);
-  return response;
+  try {
+    const response = await api.delete(`/areas/${id}`);
+    return response;
+  } catch (error) {
+    console.log("Erro ao remover registros das areas: ", error);
+  }
+}
+
+async function removeAll(data: string[]) {
+  try {
+    for(const id of data) {
+      await remove(id);
+    }
+    return 200;
+  } catch (error) {
+    console.log("Erro ao remover todas as areas: ", error);
+  }
 }
 
 export const AreaServices = {
@@ -34,4 +61,5 @@ export const AreaServices = {
   add,
   edit,
   remove,
+  removeAll,
 }

@@ -7,13 +7,13 @@ export interface UserData {
   email: string;
   avatarUrl: string | null;
   area: string;
-  company: string;  
+  company?: string;  
   password?: string | null;
   newsletter: boolean | null;
   openingVideo: boolean;
   myPlan: string | null;
   refreshToken: string | null;
-  role: string;
+  role?: string;
   token: string | null;
   isDeleted: boolean;
 }
@@ -26,6 +26,7 @@ export interface SignInCredentials {
 export interface AuthContextData {
   user: UserData;
   signIn(credentials: SignInCredentials): Promise<void | ToastId>;
+  signOut: () => void;
   isAuthenticated: boolean;
 }
 

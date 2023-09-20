@@ -8,17 +8,18 @@ import {
   Dashboard, 
   Departments, 
   ErrorPage, 
-  FirstSteps, 
+  FrequentQuestions, 
   Inventories, 
   Login, 
   Records, 
-  RegisterCompany,
-  RegisterUser, 
   Settings, 
   Tasks, 
   Uploads, 
   Users, 
-  Workstations
+  Workstations,
+  Enchiridions,
+  Risks,
+  RevalidateRisk,
 } from "@/pages";
 
 import { LoginRegister } from "@/pages/LoginRegister";
@@ -66,43 +67,10 @@ export const router = createBrowserRouter(
 
       <Route element={<App/>}>
         <Route 
-          path="/registerCompany" 
-          element={
-            <ProtectedRoute>
-              <RegisterCompany/>
-            </ProtectedRoute>
-          } 
-        />
-      </Route>
-
-      <Route element={<App/>}>
-        <Route 
-          path="/registerCompany" 
-          element={
-            <ProtectedRoute>
-              <RegisterCompany/>
-            </ProtectedRoute>
-          } 
-        />
-      </Route>
-
-      <Route element={<App/>}>
-        <Route 
           path="/dashboard" 
           element={
             <ProtectedRoute>
               <Dashboard/>
-            </ProtectedRoute>
-          } 
-        />
-      </Route>
-
-      <Route element={<App/>}>
-        <Route 
-          path="/contactus" 
-          element={
-            <ProtectedRoute>
-              <ContactUs/>
             </ProtectedRoute>
           } 
         />
@@ -132,10 +100,10 @@ export const router = createBrowserRouter(
 
       <Route element={<App/>}>
         <Route 
-          path="/firststeps" 
+          path="/frequentQuestions" 
           element={
             <ProtectedRoute>
-              <FirstSteps />
+              <FrequentQuestions />
             </ProtectedRoute>
           } 
         />
@@ -154,7 +122,7 @@ export const router = createBrowserRouter(
 
       <Route element={<App/>}>
         <Route 
-          path="/recordds" 
+          path="/records" 
           element={
             <ProtectedRoute>
               <Records />
@@ -209,17 +177,6 @@ export const router = createBrowserRouter(
 
       <Route element={<App/>}>
         <Route 
-          path="/registerUser" 
-          element={
-            <ProtectedRoute>
-              <RegisterUser />
-            </ProtectedRoute>
-          } 
-        />
-      </Route>
-
-      <Route element={<App/>}>
-        <Route 
           path="/workstations" 
           element={
             <ProtectedRoute>
@@ -228,6 +185,39 @@ export const router = createBrowserRouter(
           } 
         />
       </Route>  
+
+      <Route element={<App/>}>
+        <Route 
+          path="/enchiridions" 
+          element={
+            <ProtectedRoute>
+              <Enchiridions />
+            </ProtectedRoute>
+          } 
+        />
+      </Route> 
+
+      <Route element={<App/>}>
+        <Route 
+          path="/risks" 
+          element={
+            <ProtectedRoute>
+              <Risks />
+            </ProtectedRoute>
+          } 
+        />
+      </Route> 
+
+      <Route element={<App/>}>
+        <Route 
+          path="/revalidateRisk" 
+          element={
+            <ProtectedRoute>
+              <RevalidateRisk />
+            </ProtectedRoute>
+          } 
+        />
+      </Route> 
 
       {/********** NOT FOUND**********/}
       <Route element={<App/>}>

@@ -26,7 +26,7 @@ export function NavLink({ linkTitle, icon, linkPath, ...rest }: NavLinksProps) {
         href={linkPath}
         {...rest}
       >
-        <Icon as={iconSelector(icon)} fontSize="24" />
+        <Icon as={iconSelector(icon)} fontSize="18" color="gray.600"/>
         <Text marginLeft="2">{linkTitle}</Text>
       </Link>
     </Flex>

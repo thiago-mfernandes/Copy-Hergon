@@ -1,23 +1,11 @@
-import { HamburguerMenu } from "@/components/HamburguerMenu";
-import { PageContainer } from "@/components/PageContainer";
-import { RenderIf } from "@/components/RenderIf";
-import { Sidebar } from "@/components/Sidebar";
-import { useWideVersion } from "@/hooks/useWideVersion";
 import { Text } from "@chakra-ui/react";
+import * as S from "@/components/Table";
 
 export function Settings(){
   
-  const { isWideVersion } = useWideVersion();
-  
   return(
-    <>
-      <RenderIf conditional={isWideVersion}>
-        <HamburguerMenu />
-      </RenderIf>
-      <PageContainer>
-        <Sidebar />
-        <Text>Pagina configuracoes</Text>
-      </PageContainer>
-    </>
+    <S.TableContainer>
+      <Text>Pagina de Configurações</Text>
+    </S.TableContainer>
   )
 }

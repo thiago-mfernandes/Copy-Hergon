@@ -12,12 +12,15 @@ import { AreaData, AreaServices } from "@/services/http/areas/AreaServices";
 import { queryClient } from "@/services/queryClient";
 import { DepartmentsData } from "@/services/http/departments/DepartmentServices";
 import { api } from "@/services/axios";
+import { useCheckboxStore } from "@/components/Checkbox/store/useCheckboxStore";
+import { useDeleteManyStore } from "../../DeleteManyModal/store/useDeleteManyStore";
 
 export function useAreaModal() {
 
   const { showToast } = useShowToast();
   const navigate = useNavigate();
-
+  const { onDeleteManyModalClose } = useDeleteManyStore();
+  const { setSelectedCheckbox } = useCheckboxStore();
   const { onClose, areaToEdit, setDepartmentOptions, setCompanyValue } = useAreaStore();
 
   const {
@@ -52,7 +55,7 @@ export function useAreaModal() {
 
     const response = await AreaServices.add(newArea);
 
-    if (response.status === 201) {
+    if (response?.status === 201) {
       //em caso de sucesso
       showToast("Área criada com sucesso.", "info");
       //revalidar os dados da tabela de areas
@@ -69,7 +72,7 @@ export function useAreaModal() {
   }
 
   async function editArea(_id: string, data: AreaModalFormTypes) {
-    console.log(data)
+    
     //spread das antigas informacoes e novas informacoes
     if(areaToEdit &&  areaToEdit.id) {
 
@@ -81,13 +84,11 @@ export function useAreaModal() {
         numberOfEmployees: data.numberOfEmployees,
         description: data.description,
       };
-
-      console.log(editedArea)
         
       //envio a requisicao
       const response = await AreaServices.edit(editedArea);
   
-      if (response.status === 200) {
+      if (response?.status === 200) {
         //em caso de sucesso
         showToast("Área editada com sucesso.", "info");
         //revalidar os dados da tabela de areas
@@ -107,7 +108,7 @@ export function useAreaModal() {
   async function removeArea(id: string) {
     const response = await AreaServices.remove(id);
 
-    if (response.status === 200) {
+    if (response?.status === 200) {
       //em caso de sucesso
       showToast("Área excluída com sucesso.", "info");
       //revalidar os dados da tabela de Areas
@@ -119,6 +120,23 @@ export function useAreaModal() {
     }
   }
 
+  async function removeAllArea(data: string[]) {
+
+    
+    const response = await AreaServices.removeAll(data);
+    console.log("response =>", data);
+
+    if(response == 200) {
+      showToast("Áreas removidas com sucesso", "info");
+      queryClient.invalidateQueries(["areasData"]);
+      setSelectedCheckbox([]);
+      //fechar o modal
+      onDeleteManyModalClose();
+    } else {
+      showToast("Não foi possível excluir as áreas. Tente novamente.", "error");
+    }
+  }
+
   async function handleCompanyChange(selectedCompany: OptionType) {
     //selectedCompany é capturado no onChange no input companyName
     if (selectedCompany?.value) {
@@ -126,7 +144,7 @@ export function useAreaModal() {
       const { data } = await api.get<DepartmentsData[]>("/departments");
       //filtro os objetos de departments onde o companyName for igual ao do input selecionado
       const filteredDepartments = data.filter(
-        (department: DepartmentsData) => department.companyName?.value === selectedCompany.value
+        (department: DepartmentsData) => department.companyName === selectedCompany.value
       );
       //monto um array de opcoes com os valores dos departamentos
       const departmentOptionsArray = filteredDepartments.map(
@@ -173,6 +191,7 @@ export function useAreaModal() {
     addArea,
     editArea,
     removeArea,
+    removeAllArea,
     handleCompanyChange,
     onSubmitAreaModal,
     setSelectInputOptionsOnForm

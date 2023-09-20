@@ -7,15 +7,18 @@ import { queryClient } from "@/services/queryClient";
 import { UserServices } from "@/services/http/users/UserServices";
 import { UserData } from "@/contexts/Auth/interfaces";
 import { objIsEmpty } from "@/utils/isObjectEmpty";
-import { formUserModalSchema } from "../schema/formUserModalSchema";
 import { UserModalFormTypes } from "../types/UserModalFormTypes";
 import { useUserStore } from "../store/useUserStore";
+import { formUserModalSchema } from "../schema/formUserModalSchema";
+import { useCheckboxStore } from "@/components/Checkbox/store/useCheckboxStore";
+import { useDeleteManyStore } from "../../DeleteManyModal/store/useDeleteManyStore";
 
 export function useUserModal() {
 
   const { showToast } = useShowToast();
   const navigate = useNavigate();
-
+  const { onDeleteManyModalClose } = useDeleteManyStore();
+  const { setSelectedCheckbox } = useCheckboxStore();
   const { userToEdit, onClose } = useUserStore();
 
   const {
@@ -46,7 +49,7 @@ export function useUserModal() {
       email: data.email,
       avatarUrl: null,
       area: data.area,
-      company: data.company.value,
+      company: data.company?.value,
       password: null,
       newsletter: null,
       openingVideo: true,
@@ -59,13 +62,13 @@ export function useUserModal() {
     //envio a requisicao
     const response = await UserServices.add(newUser);
 
-    if (response.status === 201) {
+    if (response?.status === 201) {
       //em caso de sucesso
       showToast("Usuário criado com sucesso.", "info");
       //revalidar os dados da tabela de usuarios
       queryClient.invalidateQueries(["usersData"]);
       //limpar o modal
-      //reset();
+      reset();
       //fechar o modal
       onClose();
     } else {
@@ -75,33 +78,56 @@ export function useUserModal() {
     navigate("/users");
   }
 
-  async function editUser(_id: string, data: Partial<UserData>) {
-    //spread do antigo usuario com as novas informacoes do form(data)
-    const editedUser = { ...userToEdit, ...data };
-    //envio a requisicao
-    const response = await UserServices.edit(editedUser);
+  async function editUser(id: string, data: UserModalFormTypes) {
+    
+    //pegar o usuario pelo id:
+    const userByIdToEdit = await UserServices.getById(id);
+    
+    if(userByIdToEdit !== undefined) {
 
-    if (response.status === 200) {
-      //em caso de sucesso
-      showToast("Usuário editado com sucesso.", "info");
-      //revalidar os dados da tabela de usuarios
-      queryClient.invalidateQueries(["usersData"]);
-      //limpar o modal
-      //reset();
-      //fechar o modal
-      onClose();
-    } else {
-      showToast("Não foi possível editar o usuário. Tente Novamente.", "error");
+      const editedUser: UserData = { 
+        id: userByIdToEdit.id,
+        name: data.name,
+        email: data.email,
+        avatarUrl: userByIdToEdit.avatarUrl,
+        area: data.area,
+        company: data.company?.value,
+        password: userByIdToEdit.password,
+        newsletter: userByIdToEdit.newsletter,
+        openingVideo: true,
+        myPlan: userByIdToEdit.myPlan,
+        refreshToken: userByIdToEdit.refreshToken,
+        role: data.role?.value,
+        token: userByIdToEdit.token,
+        isDeleted: userByIdToEdit.isDeleted,
+       };
+
+       //envio a requisicao
+       const response = await UserServices.edit(editedUser);
+   
+       if (response?.status === 200) {
+         //em caso de sucesso
+         showToast("Usuário editado com sucesso.", "info");
+         //revalidar os dados da tabela de usuarios
+         queryClient.invalidateQueries(["usersData"]);
+         //limpar o modal
+         //reset();
+         //fechar o modal
+         onClose();
+       } else {
+         showToast("Não foi possível editar o usuário. Tente Novamente.", "error");
+       }
+   
+       navigate("/users");
     }
-
-    navigate("/users");
+    
   }
 
   async function removeUser(id: string) {
     //envio a requisição 
     const response = await UserServices.remove(id);
 
-    if (response.status === 200) {
+    if (response?.status === 200) {
       //em caso de sucesso
       showToast("Usuário excluído com sucesso.", "info");
       //revalidar os dados da tabela de usuarios
@@ -112,6 +138,22 @@ export function useUserModal() {
       onClose();
     } else {
       showToast("Não foi possível excluir o usuário. Tente Novamente.", "error");
+    }
+  }
+
+  async function removeAllUsers(data: string[]) {
+    
+    const response = await UserServices.removeAll(data);
+    
+
+    if(response == 200) {
+      showToast("Usuários removidas com sucesso", "info");
+      queryClient.invalidateQueries(["usersData"]);
+      setSelectedCheckbox([]);
+      //fechar o modal
+      onDeleteManyModalClose();
+    } else {
+      showToast("Não foi possível excluir os usuários. Tente novamente.", "error");
     }
   }
 
@@ -135,6 +177,7 @@ export function useUserModal() {
     addUser,
     editUser,
     removeUser,
+    removeAllUsers,
     onSubmitUserModal,
   }
 }

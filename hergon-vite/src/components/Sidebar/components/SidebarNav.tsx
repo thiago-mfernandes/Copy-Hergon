@@ -25,7 +25,7 @@ export function SidebarNav() {
       justifyContent="flex-start"
       height="100%"
       paddingBottom={isDrawerSidebar ? "0" : "8"}
-      marginTop={isDrawerSidebar ? "3" : "0"}
+      marginTop={isDrawerSidebar ? "3" : "0"}      
     >
       <Box
         width="100%"
@@ -42,7 +42,11 @@ export function SidebarNav() {
           />
         </RenderIf>
       </Box>
-      <Stack spacing="6" alignItems="flex-start" my="4">
+      <Stack 
+        spacing="6" 
+        alignItems="flex-start" 
+        my="4"
+      >
         {
           sidebarData.map((item) => (
             item.subMenu

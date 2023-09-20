@@ -1,11 +1,13 @@
 import { ChildrenProps } from "../interfaces"; 
-import { Tbody as ChakraTbody } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 
 export function Tbody({ children }: ChildrenProps){
   return (
-    <ChakraTbody
-      display={{ base: "block", lg: "table-row-group"}}
+    <Flex
       width="100%"
-    >{children}</ChakraTbody>
+      flexDirection="column"
+    >
+      {children}
+    </Flex>
   );
 }

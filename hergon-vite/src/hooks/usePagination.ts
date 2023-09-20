@@ -3,8 +3,8 @@ import { useState } from "react";
 
 // aqui pode ser any
 export function usePagination(data: any) {
-
-  //console.log(data)
+  
+  console.log(data);
 
   const [itemsPerPage, setItemPerPage] = useState(10);
 

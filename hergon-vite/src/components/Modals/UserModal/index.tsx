@@ -9,16 +9,14 @@ import { SelectedCompaniesType } from "./types/SelectedCompanieTypes";
 import {
   ModalBody,
   ModalCloseButton,
-  ModalContent,
   ModalFooter,
-  ModalHeader,
   ModalOverlay,
   VStack
 } from "@chakra-ui/react";
 
 import { Input, useInputCompanies, usePermissionTypes, ControlledSelect } from "@/components/Inputs";
 import { CancelButton, SaveButton } from "@/components/Button";
-import { Modal, ModalForm } from "../components";
+import { Modal, ModalForm, ModalContent, ModalHeader } from "../components";
 
 export function UserModal() {
 
@@ -47,10 +45,22 @@ export function UserModal() {
     userPermissionsGroup
   } = usePermissionTypes();
 
-  console.log(companiesGroupOptions);
+  
   useEffect(() => {
     if (userToEdit) {
-      reset(userToEdit);
+      reset({
+        company: {
+          label: userToEdit.company,
+          value: userToEdit.company,
+        },
+        role: {
+          label: userToEdit.role,
+          value: userToEdit.role
+        },
+        name: userToEdit.name,
+        email: userToEdit.email,
+        area: userToEdit.area,
+      });
     } else {
       reset({
         company: null,
@@ -110,7 +120,7 @@ export function UserModal() {
                 control={control}
                 label="Tipo de Permissão"
                 placeholder="Selecione o tipo"
-                options={handleWithTypeofPermissionGroupToRender(user.id, user.role?.label)}
+                options={handleWithTypeofPermissionGroupToRender(user.id, user.role)}
               />
               {
                 errors.role &&

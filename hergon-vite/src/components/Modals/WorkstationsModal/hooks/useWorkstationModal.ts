@@ -15,11 +15,15 @@ import { WorkstationData, WorkstationServices } from "@/services/http/workstatio
 import { queryClient } from "@/services/queryClient";
 import { objIsEmpty } from "@/utils/isObjectEmpty";
 import { useWorkstationStore } from "../store/useWorkstationStore";
+import { useCheckboxStore } from "@/components/Checkbox/store/useCheckboxStore";
+import { useDeleteManyStore } from "../../DeleteManyModal/store/useDeleteManyStore";
 
 
 export function useWorkstationModal(){
 
   const { showToast } = useShowToast();
+  const { onDeleteManyModalClose } = useDeleteManyStore();
+  const { setSelectedCheckbox } = useCheckboxStore();
   const navigate = useNavigate();
   const { user } = useAuth();
 
@@ -44,8 +48,6 @@ export function useWorkstationModal(){
 
   const { 
     workstationToEdit, 
-    companyValue,
-    departmentValue,
     onClose, 
     setDepartmentOptions, 
     setCompanyValue, 
@@ -110,7 +112,7 @@ export function useWorkstationModal(){
     }    
     setDepartmentValue([selectedDepartment]);
   }
-
+  
   async function addWorkstation(data: WorkstationModalFormType) {
     
     const newWorkstation: WorkstationData = {
@@ -122,10 +124,10 @@ export function useWorkstationModal(){
       areaName: data.areaName?.value,
       description: data.description,
     }
-
+    
     const response = await WorkstationServices.add(newWorkstation);
 
-    if(response.status === 201) {
+    if(response?.status === 201) {
       //em caso de sucesso
       showToast("Posto de Trabalho criado com sucesso", "info");
       //revalidar os dados da tabela de workstations    }
@@ -157,7 +159,7 @@ export function useWorkstationModal(){
       
       const response = await WorkstationServices.edit(editedWorkstation);
       
-      if (response.status === 200) {
+      if (response?.status === 200) {
         //em caso de sucesso
         showToast("Posto de trabalho editado com sucesso.", "info");
         //revalidar os dados da tabela de workstations
@@ -176,7 +178,7 @@ export function useWorkstationModal(){
   async function removeWorkstation(id: string) {
     const response = await WorkstationServices.remove(id);
 
-    if (response.status === 200) {
+    if (response?.status === 200) {
       //em caso de sucesso
       showToast("Posto de trabalho excluído com sucesso.", "info");
       //revalidar os dados da tabela de Postos de trabalho
@@ -188,7 +190,22 @@ export function useWorkstationModal(){
     }
   }  
 
+  async function removeAllWorkstations(data: string[]) {
+    const response = await WorkstationServices.removeAll(data);
+
+    if(response == 200) {
+      showToast("Postos de trabalho removidos com sucesso.", "info");
+      queryClient.invalidateQueries(["workstationData"]);
+      setSelectedCheckbox([]);
+      //fechar o modal
+      onDeleteManyModalClose();
+    } else {
+      showToast("Não foi possível remover todos os postos de trabalho. Tente novamente.", "error");
+    }
+  }
+
   async function onSubmitWorkstationModal(data: WorkstationModalFormType) {
+    
     if (objIsEmpty(workstationToEdit)) {
       await addWorkstation(data);
     } else {
@@ -235,8 +252,9 @@ export function useWorkstationModal(){
         role: "",
       });
     }
+  
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[workstationToEdit, reset, companyValue, departmentValue]);
+  },[workstationToEdit]);
 
   useEffect(() => {
     reset();
@@ -252,8 +270,10 @@ export function useWorkstationModal(){
     addWorkstation,
     editWorkstation,
     removeWorkstation,
+    removeAllWorkstations,
     onSubmitWorkstationModal,
     handleCompanyChange,
     handleDepartmentChange,
+    navigate,
   }
 }

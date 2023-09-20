@@ -14,7 +14,7 @@ export function WelcomeContainer({ children }: WelcomeContainerProps) {
       justifyContent="center"
       alignItems="center"
       marginLeft={{base: "0", lg: "auto" }} 
-      padding={{ base: "1rem", lg: "8rem" }}
+      padding={{ base: "1rem", lg: "2rem" }}
     >
       {children}
     </Flex>

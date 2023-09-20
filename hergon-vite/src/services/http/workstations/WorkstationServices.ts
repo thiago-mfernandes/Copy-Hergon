@@ -12,28 +12,56 @@ export interface WorkstationData {
 }
 
 async function getAll() {
-  const { data } = await api.get<WorkstationData[]>("/workstations");
-  return removeUserId(data);
+  try {
+    const { data } = await api.get<WorkstationData[]>("/workstations");
+    return removeUserId(data);
+  } catch (error) {
+    console.error('Erro ao obter todos os postos de trabalho: ', error);
+  }
 }
 
 async function add(newWorkstation: WorkstationData) {
-  const response = await api.post("/workstations", newWorkstation);
-  return response;
+  try {
+    const response = await api.post("/workstations", newWorkstation);
+    return response;
+  } catch (error) {
+    console.error('Erro ao adicionar o posto de trabalho: ', error);
+  }
 }
 
 async function edit(editedWorkstation: WorkstationData) {
-  const response = await api.put(`/workstations/${editedWorkstation.id}`, editedWorkstation);
-  return response;
+  try {
+    const response = await api.put(`/workstations/${editedWorkstation.id}`, editedWorkstation);
+    return response;
+  } catch (error) {
+    console.error('Erro ao editar o posto de trabalho: ', error);
+  }
 }
 
 async function remove(id: string) {
-  const response = await api.delete(`/workstations/${id}`);
-  return response;
+  try {
+    const response = await api.delete(`/workstations/${id}`);
+    return response;
+  } catch (error) {
+    console.error('Erro ao remover o posto de trabalho: ', error);
+  }
+}
+
+async function removeAll(data: string[]) {
+  try {
+    for(const id of data) {
+      await remove(id);
+    }
+    return 200;
+  } catch (error) {
+    console.error('Erro ao remover todos os postos de trabalho: ', error);
+  }
 }
 
 export const WorkstationServices = {
   getAll,
   add,
   edit,
-  remove
+  remove,
+  removeAll,
 }

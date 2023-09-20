@@ -11,11 +11,15 @@ import { useAuth } from "@/contexts/Auth";
 import { queryClient } from "@/services/queryClient";
 import { useCompanieStore } from "../store/useCompanieStore";
 import { useEffect } from "react";
+import { useDeleteManyStore } from "../../DeleteManyModal/store/useDeleteManyStore";
+import { useCheckboxStore } from "@/components/Checkbox/store/useCheckboxStore";
 
 export function useCompaniesModal() {
 
   const { user } = useAuth();
   const { onClose, companieToEdit } = useCompanieStore();
+  const { onDeleteManyModalClose } = useDeleteManyStore();
+  const { setSelectedCheckbox } = useCheckboxStore();
   const { showToast } = useShowToast();
   const navigate = useNavigate();
 
@@ -43,7 +47,7 @@ export function useCompaniesModal() {
     //envio a requisicao
     const response = await CompanieServices.add(newCompany);
 
-    if(response.status === 201) {
+    if(response?.status === 201) {
       //em caso de sucesso
       showToast("Empresa criada com sucesso.", "info");
       //revalidar os dados da tabela de empresas
@@ -72,7 +76,7 @@ export function useCompaniesModal() {
       //envio a resquisicao
       const response = await CompanieServices.edit(editedCompanie);
   
-      if(response.status === 200) {
+      if(response?.status === 200) {
         //em caso de sucesso
         showToast("Empresa editada com sucesso.", "info");
         //revalidar os dados da tabela de empresas
@@ -93,7 +97,7 @@ export function useCompaniesModal() {
     //envio a requisicao
     const response = await CompanieServices.remove(id);
 
-    if(response.status === 200) {
+    if(response?.status === 200) {
       //em caso de sucesso
       showToast("Empresa excluída com sucesso.", "info");
       //revalidar os dados da tabela de empresas
@@ -104,6 +108,23 @@ export function useCompaniesModal() {
       onClose();
     } else {
       showToast("Não foi possível excluir a empresa. Tente Novamente.", "error");
+    }
+  }
+
+  async function removeAllCompany(data: string[]) {
+    
+    const response = await CompanieServices.removeAll(data);
+    
+
+    if(response == 200) {
+      showToast("Empresas removidas com sucesso", "info");
+      //revalidar os dados da tabela de empresas
+      queryClient.invalidateQueries(["companiesData"]);
+      setSelectedCheckbox([]);
+      //fechar o modal
+      onDeleteManyModalClose();
+    } else {
+      showToast("Não foi possível excluir as empresas. Tente novamente.", "error");
     }
   }
   
@@ -129,7 +150,8 @@ export function useCompaniesModal() {
         companyName: ""
       });
     }
-  },[companieToEdit, reset])
+  },[companieToEdit, reset]);
+
 
   return {
     showToast,
@@ -140,6 +162,7 @@ export function useCompaniesModal() {
     addCompany,
     editCompany,
     removeCompany,
+    removeAllCompany,
     onSubmitCompanyModal,
     onClose
   }

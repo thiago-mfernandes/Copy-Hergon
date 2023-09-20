@@ -10,15 +10,15 @@ export function Sidebar() {
 
   const { isWideVersion } = useWideVersion();
 
-  if(isWideVersion) {
+  if(!isWideVersion) {
     return (
       <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
         <DrawerOverlay>
-          <DrawerContent backgroundColor="gray.50">
-              <DrawerCloseButton />
-              <DrawerHeader>
-                <Image src={logo} alt={""} />
-              </DrawerHeader>
+          <DrawerContent backgroundColor="gray.50" paddingBottom="8">
+            <DrawerCloseButton />
+            <DrawerHeader>
+              <Image src={logo} alt={""} />
+            </DrawerHeader>
             <DrawerBody>
               <SidebarNav />
             </DrawerBody>

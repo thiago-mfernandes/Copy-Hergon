@@ -1,20 +1,31 @@
 import { ReactNode } from "react";
-import { Tr as TrChakra, HTMLChakraProps } from "@chakra-ui/react";
+import { Flex, HTMLChakraProps } from "@chakra-ui/react";
 
-interface TrProps extends HTMLChakraProps<"tr"> {
+interface TableRowProps extends HTMLChakraProps<"div"> {
   children: ReactNode;
+  indexPosition?: number;
+  disableRowStyles?: boolean;
 }
 
-export function Tr({ children, ...rest }: TrProps) {
+export function Tr({ indexPosition, disableRowStyles, children, ...rest }: TableRowProps) {
   return (
-    <TrChakra
-    display={{ base: "block", lg: "flex"}}
-    alignItems={{lg: "center"}}
-    max-width="100%"
-    
-    {...rest}
+    <Flex
+      flexDirection={{ base: "column", lg: "row" }}
+      alignItems={{ base:"flex-end", lg:"center"}}
+      width="100%"  
+      paddingLeft="4"  
+      paddingRight="4"  
+      borderWidth={disableRowStyles ? "0" : "1px"}
+      borderColor="gray.50"
+      borderRadius="8px"
+      marginBottom="2"
+      backgroundColor={indexPosition !== undefined && indexPosition % 2 == 0 ? "gray.50" : "transparent"}
+      _hover={{ 
+        boxShadow: disableRowStyles ? "none" : "md",
+      }}
+      {...rest}
     >
       {children}
-    </TrChakra>
+    </Flex>
   )
 }
